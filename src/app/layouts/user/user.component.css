@@ -1,0 +1,4 @@
+@import '../../../themes/_theme-variables.css';
+.app__container{
+    background-color: var(--bg-color);
+}

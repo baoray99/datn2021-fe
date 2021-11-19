@@ -1,0 +1,106 @@
+@import "../../../../themes/_theme-variables.css";
+.sidebar {
+  --width: 96px;
+  position: fixed;
+  z-index: 9;
+  top: 76px;
+  left: 0;
+  width: var(--width);
+  padding: 0 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sidebar__dropdown {
+  position: relative;
+}
+.sidebar__btn-add-act {
+  height: 44px;
+  width: 44px;
+  border-radius: 50px;
+  display: flex;
+  margin-bottom: 10px;
+}
+.sidebar__dropdown-content {
+  position: absolute;
+  display: block;
+  top: 100%;
+  left: 0;
+  background-color: var(--white-color);
+  border-radius: 10px;
+  background-color: var(--white-color);
+  min-width: 200px;
+  padding: 10px 0;
+  box-shadow: 0 -4px 32px rgb(0 0 0 / 20%);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  transform: translateY(-10%);
+  opacity: 0;
+  visibility: hidden;
+}
+.sidebar__dropdown-content.active {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+.sidebar__dropdown-item {
+}
+.sidebar__dropdown-link {
+  display: block;
+  padding: 10px 12px;
+  transition: all 0.2s ease;
+  background-color: var(--white-color);
+}
+.sidebar__dropdown-link:hover {
+  background-color: var(--sidebar-hover);
+}
+.sidebar__add-act-icon {
+  font-size: 20px;
+  margin: auto;
+  color: var(--white-color);
+  transform: scale(1) rotate(0);
+  transition: all 0.4s ease;
+}
+
+.sidebar__list {
+}
+.sidebar__item {
+  margin: 4px 0;
+}
+.sidebar__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  justify-content: center;
+  height: 72px;
+  width: 72px;
+  border-radius: 16px;
+  transition: all 0.2s ease;
+}
+.sidebar__btn.active .sidebar__icon,
+.sidebar__btn.active .sidebar__title {
+  color: var(--black-color);
+}
+.sidebar__btn.active {
+  background-color: var(--sidebar-active);
+}
+.sidebar__btn.active:hover {
+  background-color: var(--sidebar-active);
+}
+.sidebar__btn:hover {
+  background-color: var(--sidebar-hover);
+}
+.sidebar__btn:hover .sidebar__icon,
+.sidebar__btn:hover .sidebar__title {
+  color: var(--black-color);
+}
+.sidebar__icon {
+  color: var(--sidebar-text);
+  font-size: 18px;
+}
+.sidebar__title {
+  color: var(--sidebar-text);
+  letter-spacing: 1px;
+  margin: 4px 0;
+}

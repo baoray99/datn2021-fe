@@ -1,0 +1,81 @@
+<div class="navbar">
+  <div class="navbar__logo">
+    <a href="#" class="navbar__logo-link">Let's Learn</a>
+    <h4 class="navbar__logo-slogan">Học những gì bạn thích</h4>
+  </div>
+  <div for="searchbar" class="navbar__search">
+    <div class="navbar__search-outline">
+      <i class="fas fa-search navbar__search-icon"></i>
+      <input
+        type="text"
+        placeholder="Tìm kiếm khóa học, bài viết, video, ..."
+        class="navbar__search-input"
+        (focus)="onFocusSearch()"
+        (focusout)="onFocusOutSearch()"
+      />
+    </div>
+  </div>
+  <ng-container *ngIf="isLogined; else elseTemplate">
+    <div class="navbar__info">
+      <div class="navbar__notify">
+        <span class="navbar__notify-btn" (click)="expandNotify()">
+          <i class="fas fa-bell navbar__notify-icon"></i>
+        </span>
+        <ul class="navbar__notify-list">
+          <div class="navbar__notify-heading">
+            <h3 class="navbar__notify-title">Thông báo</h3>
+            <div class="navbar__notify-options">
+              <i class="fas fa-ellipsis-h navbar__notify-options-icon"></i>
+            </div>
+          </div>
+          <li class="navbar__notify-item">aloooooooooooooo</li>
+        </ul>
+      </div>
+      <div class="navbar__user">
+        <div class="navbar__avatar" (click)="expandUser()">
+          <img
+            class="navbar__avatar-img"
+            src="https://graph.facebook.com/1972665266235480/picture?width=400&height=400"
+            alt=""
+          />
+        </div>
+        <div class="navbar__user-content">
+          <div class="navbar__user-description">
+            <img
+              class="navbar__user-img"
+              src="https://graph.facebook.com/1972665266235480/picture?width=400&height=400"
+              alt=""
+            />
+            <h3 class="navbar__user-name">Thai Bao</h3>
+          </div>
+          <hr />
+          <div class="navbar__user-link-group">
+            <a href="#" class="navbar__user-link-group-link">Viết blog</a>
+            <a href="#" class="navbar__user-link-group-link"
+              >Bài viết của tôi</a
+            >
+          </div>
+          <hr />
+          <div class="navbar__user-link-group">
+            <a href="#" class="navbar__user-link-group-link">Nội dung đã lưu</a>
+          </div>
+          <hr />
+          <div class="navbar__user-link-group">
+            <a href="#" class="navbar__user-link-group-link">Cài đặt</a>
+            <a href="#" class="navbar__user-link-group-link">Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <div class="navbar__login">
+      <button
+        routerLink="/login"
+        class="btn btn-primary navbar__login-btn-login"
+      >
+        Đăng nhập
+      </button>
+    </div>
+  </ng-template>
+</div>

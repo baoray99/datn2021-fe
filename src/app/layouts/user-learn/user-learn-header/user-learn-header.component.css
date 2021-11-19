@@ -1,0 +1,49 @@
+@import "../../../../themes/_theme-variables.css";
+.header {
+  --height: 66px;
+  height: var(--height);
+  width: 100%;
+  display: flex;
+  background-color: var(--header-learn);
+  position: fixed;
+  top: 0;
+  z-index: 9;
+}
+.header__back-btn {
+  display: block;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  width: 66px;
+  display: flex;
+  text-decoration: none;
+}
+.header__back-btn:hover {
+  background-color: #1d222b;
+}
+.header__back-icon {
+  font-size: 24px;
+  color: var(--white-color);
+  margin: auto;
+}
+.header__logo {
+  padding: 0px 12px;
+  display: flex;
+  align-items: center;
+}
+.header__logo-link {
+  text-decoration: none;
+  color: var(--white-color);
+  font-size: 24px;
+  font-weight: 600;
+}
+.header__seperate {
+  height: 24px;
+  width: 1px;
+  background-color: var(--white-color);
+  margin: 0 24px;
+}
+.header__course-name {
+  color: var(--white-color);
+  font-size: 18px;
+  font-weight: 200;
+}
