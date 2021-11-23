@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { User } from 'src/app/utils/models/user/user.model';
+
 
 @Component({
   selector: 'app-header',
@@ -6,42 +8,50 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-  @Input('isLogined') set isLogined(value: any) {
-    this._isLogined = value;
+  @Input('user') set user(value: any) {
+    this._user = value;
   }
-  private _isLogined: boolean;
-  get isLogined() {
-    return this._isLogined;
+  private _user: User;
+  get user() {
+    return this._user;
   }
+  isLogined: boolean = false;
   constructor() {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isLogined = JSON.parse(localStorage.getItem('isLogined'));
+  }
+
   ngAfterViewInit(): void {
-    const notifyContent = document.querySelector<HTMLElement>(
-      '.navbar__notify-list'
-    );
-    const notifyIcon = document.querySelector<HTMLElement>(
-      '.navbar__notify-icon '
-    );
-    const userContent = document.querySelector<HTMLElement>(
-      '.navbar__user-content'
-    );
-    const userAvt = document.querySelector<HTMLElement>('.navbar__avatar-img');
-    window.addEventListener('mouseup', function (e) {
-      if (
-        e.target != notifyContent &&
-        (<HTMLElement>e.target).parentNode != notifyContent &&
-        e.target != notifyIcon
-      ) {
-        notifyContent.classList.remove('active');
-      }
-      if (
-        e.target != userContent &&
-        (<HTMLElement>e.target).parentNode != userContent &&
-        e.target != userAvt
-      ) {
-        userContent.classList.remove('active');
-      }
-    });
+    if (this.isLogined) {
+      const notifyContent = document.querySelector<HTMLElement>(
+        '.navbar__notify-list'
+      );
+      const notifyIcon = document.querySelector<HTMLElement>(
+        '.navbar__notify-icon '
+      );
+      const userContent = document.querySelector<HTMLElement>(
+        '.navbar__user-content'
+      );
+      const userAvt = document.querySelector<HTMLElement>(
+        '.navbar__avatar-img'
+      );
+      window.addEventListener('mouseup', function (e) {
+        if (
+          e.target != notifyContent &&
+          (<HTMLElement>e.target).parentNode != notifyContent &&
+          e.target != notifyIcon
+        ) {
+          notifyContent.classList.remove('active');
+        }
+        if (
+          e.target != userContent &&
+          (<HTMLElement>e.target).parentNode != userContent &&
+          e.target != userAvt
+        ) {
+          userContent.classList.remove('active');
+        }
+      });
+    }
   }
   onFocusSearch(): void {
     document.querySelector<HTMLElement>(

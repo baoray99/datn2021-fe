@@ -76,6 +76,7 @@
   margin: 20px 0;
 }
 .box-login__footer {
+  margin-bottom: 24px;
 }
 .footer__link {
   cursor: pointer;

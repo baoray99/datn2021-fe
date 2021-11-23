@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,8 +12,16 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
-  constructor() {}
+  @Input('role') set role(value: any) {
+    this._role = value;
+  }
+  private _role: string;
+  get role() {
+    return this._role;
+  }
+  sidebarItems: any;
   isIconActive: boolean = false;
+  constructor() {}
   ngOnInit(): void {}
   expandDropdown(): void {
     const icon = document.querySelector<HTMLElement>('.sidebar__add-act-icon');
@@ -23,13 +37,6 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     const sidebarItems =
       document.querySelectorAll<HTMLElement>('.sidebar__btn');
-    const dropdownContent = document.querySelector<HTMLElement>(
-      '.sidebar__dropdown-content'
-    );
-    const icon = document.querySelector<HTMLElement>('.sidebar__add-act-icon');
-    const btnAddAct = document.querySelector<HTMLElement>(
-      '.sidebar__btn-add-act'
-    );
     sidebarItems.forEach((item) => {
       item.addEventListener('click', function () {
         document
@@ -38,6 +45,14 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         this.classList.add('active');
       });
     });
+    const dropdownContent = document.querySelector<HTMLElement>(
+      '.sidebar__dropdown-content'
+    );
+    const icon = document.querySelector<HTMLElement>('.sidebar__add-act-icon');
+    const btnAddAct = document.querySelector<HTMLElement>(
+      '.sidebar__btn-add-act'
+    );
+
     window.addEventListener('mouseup', function (event) {
       if (
         event.target != dropdownContent &&

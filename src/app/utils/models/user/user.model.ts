@@ -12,6 +12,7 @@ export class User {
   youtube: string = '';
   registeredCourses: Array<Course> = [];
   email: string = '';
+  role: string = '';
 
   constructor(d = null) {
     d = d || {};
@@ -27,5 +28,6 @@ export class User {
     this.youtube = d.youtube || '';
     this.email = d.email || '';
     this.registeredCourses = d.registeredCourses || [];
+    this.role = d.role || '';
   }
 }

@@ -26,7 +26,13 @@
         <h5 class="sidebar__title">Home</h5>
       </a>
     </li>
-    <li class="sidebar__item">
+    <li class="sidebar__item" *hasPermission="'teacher'; role: role">
+      <a href="#" class="sidebar__btn">
+        <i class="fas fa-lightbulb sidebar__icon"></i>
+        <h5 class="sidebar__title">Courses</h5>
+      </a>
+    </li>
+    <li class="sidebar__item" *hasPermission="'student'; role: role">
       <a href="#" class="sidebar__btn">
         <i class="fas fa-lightbulb sidebar__icon"></i>
         <h5 class="sidebar__title">Học</h5>

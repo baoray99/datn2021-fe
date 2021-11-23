@@ -1,9 +1,12 @@
 <div class="app">
   <div class="app__header">
-    <app-header [isLogined]="isLogined"></app-header>
+    <app-header [user]="user"></app-header>
   </div>
   <div class="app__container">
-    <app-sidebar></app-sidebar>
+    <app-sidebar [role]="role"></app-sidebar>
+    <div class="app-content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
   <div class="app__footer">
     <app-footer></app-footer>

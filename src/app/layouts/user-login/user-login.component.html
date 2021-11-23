@@ -11,20 +11,29 @@
       </h1>
     </header>
     <div class="box-login__form">
-      <form action="" method="post">
+      <form
+        [formGroup]="loginForm"
+        class="login-form"
+        (ngSubmit)="loginOrRegister()"
+      >
         <div class="form__group" *ngIf="!isLogin">
           <label class="form__label" for="name">Tên của bạn?</label>
           <input
             class="form__input"
             type="text"
             id="name"
-            name="name"
+            formControlName="name"
             placeholder="Họ và tên của bạn"
           />
         </div>
         <div class="form__group">
           <label class="form__label" for="email">Email</label>
-          <input class="form__input" type="email" id="email" name="email" />
+          <input
+            class="form__input"
+            type="email"
+            id="email"
+            formControlName="email"
+          />
         </div>
         <div class="form__group">
           <label class="form__label" for="password">Password</label>
@@ -32,8 +41,18 @@
             class="form__input"
             type="password"
             id="password"
-            name="password"
+            formControlName="password"
           />
+        </div>
+        <div class="form__group" *ngIf="!isLogin">
+          <label class="form__label" for="role">Tư cách</label>
+          <select class="form__input" id="role" formControlName="role">
+            <option value="" selected disabled hidden>
+              --Chọn tư cách của bạn--
+            </option>
+            <option value="student">Học viên</option>
+            <option value="teacher">Giảng viên</option>
+          </select>
         </div>
         <button type="submit" class="form__btn-submit btn">
           {{ isLogin ? "Đăng nhập" : "Đăng ký" }}

@@ -4,6 +4,7 @@ import { AdminComponent } from './layouts/admin/admin.component';
 import { UserLearnComponent } from './layouts/user-learn/user-learn.component';
 import { UserLoginComponent } from './layouts/user-login/user-login.component';
 import { UserComponent } from './layouts/user/user.component';
+import { HomePageComponent } from './service-pages/service-enduser/home-page/home-page.component';
 import { LearnPageComponent } from './service-pages/service-enduser/learn-page/learn-page.component';
 
 const routes: Routes = [
@@ -11,12 +12,11 @@ const routes: Routes = [
   {
     path: '',
     component: UserComponent,
-    children: [
-      {
-        path: 'login',
-        component: UserLoginComponent,
-      },
-    ],
+    children: [{ path: '', component: HomePageComponent }],
+  },
+  {
+    path: 'login',
+    component: UserLoginComponent,
   },
   {
     path: 'learn',

@@ -33,20 +33,12 @@
       </div>
       <div class="navbar__user">
         <div class="navbar__avatar" (click)="expandUser()">
-          <img
-            class="navbar__avatar-img"
-            src="https://graph.facebook.com/1972665266235480/picture?width=400&height=400"
-            alt=""
-          />
+          <img class="navbar__avatar-img" src="{{ user?.avatar }}" alt="" />
         </div>
         <div class="navbar__user-content">
           <div class="navbar__user-description">
-            <img
-              class="navbar__user-img"
-              src="https://graph.facebook.com/1972665266235480/picture?width=400&height=400"
-              alt=""
-            />
-            <h3 class="navbar__user-name">Thai Bao</h3>
+            <img class="navbar__user-img" src="{{ user?.avatar }}" alt="" />
+            <h3 class="navbar__user-name">{{ user?.name }}</h3>
           </div>
           <hr />
           <div class="navbar__user-link-group">

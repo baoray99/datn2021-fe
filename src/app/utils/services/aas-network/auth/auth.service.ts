@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ServicePath } from '../../../common/constant-service-api';
 import { API } from '../../api';
+import { User } from '../../../models/user/user.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const USER_LOGIN = ServicePath.AUTH_SERVICE + '/login';
 const USER_REGISTER = ServicePath.AUTH_SERVICE + '/register';
@@ -9,6 +11,7 @@ const USER_COURSE_LIST = ServicePath.AUTH_SERVICE + '/my-courses';
 const USER_ADD_COURSE = ServicePath.AUTH_SERVICE;
 const USER_BY_ROLE = ServicePath.AUTH_SERVICE;
 const USER_DETAIL = ServicePath.AUTH_SERVICE;
+const USER_ME = ServicePath.AUTH_SERVICE + '/me';
 const USER_DELETE = ServicePath.AUTH_SERVICE;
 
 @Injectable({
@@ -16,7 +19,26 @@ const USER_DELETE = ServicePath.AUTH_SERVICE;
 })
 export class AuthService {
   constructor(private api: API) {}
+  // private user: User;
+  // private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
+  // user$: Observable<User> = this.userSubject.asObservable();
+
+  // updateData() {
+  //   this.userSubject.next(this.user);
+  // }
+  // fecthUser() {
+  //   this.getMe().subscribe(
+  //     (res: any) => {
+  //       this.user = res;
+  //       this.updateData();
+  //     },
+  //     (error) => {
+  //       this.user = null;
+  //       this.updateData();
+  //     }
+  //   );
+  // }
   //GET user by role
   getUsersByRole() {
     const url = USER_BY_ROLE;
@@ -36,8 +58,8 @@ export class AuthService {
   }
 
   //get me
-  getMe(id: string) {
-    const url = USER_DETAIL + `/${id}`;
+  getMe() {
+    const url = USER_ME;
     return this.api.get(url);
   }
 

@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +16,11 @@ import { UserLearnHeaderComponent } from './layouts/user-learn/user-learn-header
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AdminHeaderComponent } from './layouts/admin/admin-header/admin-header.component';
 
+//import service
+import { API } from './utils/services/api';
+import { HomePageComponent } from './service-pages/service-enduser/home-page/home-page.component';
+import { HaspermissionDirective } from './utils/directives/haspermission.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,13 +33,18 @@ import { AdminHeaderComponent } from './layouts/admin/admin-header/admin-header.
     UserLearnComponent,
     UserLearnHeaderComponent,
     AdminComponent,
-    AdminHeaderComponent
+    AdminHeaderComponent,
+    HomePageComponent,
+    HaspermissionDirective,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [API],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
