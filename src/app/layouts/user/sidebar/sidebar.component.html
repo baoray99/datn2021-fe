@@ -8,7 +8,9 @@
     </button>
     <ul class="sidebar__dropdown-content">
       <li class="sidebar__dropdown-item">
-        <a href="" class="sidebar__dropdown-link"> Viết blog </a>
+        <a routerLink="/add-course" class="sidebar__dropdown-link">
+          Thêm khóa học</a
+        >
       </li>
       <li class="sidebar__dropdown-item">
         <a href="" class="sidebar__dropdown-link"> Viết blog </a>
@@ -18,34 +20,33 @@
       </li>
     </ul>
   </div>
-
   <ul class="sidebar__list">
     <li class="sidebar__item">
-      <a href="#" class="sidebar__btn active">
+      <a routerLink="/home" class="sidebar__btn active">
         <i class="fas fa-home sidebar__icon"></i>
         <h5 class="sidebar__title">Home</h5>
       </a>
     </li>
-    <li class="sidebar__item" *hasPermission="'teacher'; role: role">
-      <a href="#" class="sidebar__btn">
-        <i class="fas fa-lightbulb sidebar__icon"></i>
+    <li class="sidebar__item" *hasPermission="'teacher'; user: user">
+      <a routerLink="/my-courses" class="sidebar__btn">
+        <i class="fas fa-tasks sidebar__icon"></i>
         <h5 class="sidebar__title">Courses</h5>
       </a>
     </li>
-    <li class="sidebar__item" *hasPermission="'student'; role: role">
-      <a href="#" class="sidebar__btn">
+    <li class="sidebar__item" *hasPermission="'student'; user: user">
+      <a routerLink="/courses" class="sidebar__btn">
         <i class="fas fa-lightbulb sidebar__icon"></i>
         <h5 class="sidebar__title">Học</h5>
       </a>
     </li>
     <li class="sidebar__item">
-      <a href="#" class="sidebar__btn">
+      <a class="sidebar__btn">
         <i class="fas fa-question sidebar__icon"></i>
         <h5 class="sidebar__title">Hỏi</h5>
       </a>
     </li>
     <li class="sidebar__item">
-      <a href="#" class="sidebar__btn">
+      <a class="sidebar__btn">
         <i class="fas fa-newspaper sidebar__icon"></i>
         <h5 class="sidebar__title">Blog</h5>
       </a>

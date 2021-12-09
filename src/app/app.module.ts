@@ -14,12 +14,41 @@ import { LearnPageComponent } from './service-pages/service-enduser/learn-page/l
 import { UserLearnComponent } from './layouts/user-learn/user-learn.component';
 import { UserLearnHeaderComponent } from './layouts/user-learn/user-learn-header/user-learn-header.component';
 import { AdminComponent } from './layouts/admin/admin.component';
-import { AdminHeaderComponent } from './layouts/admin/admin-header/admin-header.component';
 
 //import service
 import { API } from './utils/services/api';
 import { HomePageComponent } from './service-pages/service-enduser/home-page/home-page.component';
 import { HaspermissionDirective } from './utils/directives/haspermission.directive';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IconsProviderModule } from './icons-provider.module';
+
+//Ant design
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
+
+//Owl carousel
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CourseManagerPageComponent } from './service-pages/service-enduser/course-manager-page/course-manager-page.component';
+
+//Firebase
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { environment } from '../environments/environment';
+import { LessionManagerPageComponent } from './service-pages/service-enduser/lession-manager-page/lession-manager-page.component';
+import { CoursePageComponent } from './service-pages/service-enduser/course-page/course-page.component';
+import { SpinnerComponent } from './layouts/extensions/spinner/spinner.component';
+registerLocaleData(en);
 
 @NgModule({
   declarations: [
@@ -33,9 +62,12 @@ import { HaspermissionDirective } from './utils/directives/haspermission.directi
     UserLearnComponent,
     UserLearnHeaderComponent,
     AdminComponent,
-    AdminHeaderComponent,
     HomePageComponent,
+    CourseManagerPageComponent,
+    LessionManagerPageComponent,
     HaspermissionDirective,
+    CoursePageComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,8 +75,22 @@ import { HaspermissionDirective } from './utils/directives/haspermission.directi
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
+    IconsProviderModule,
+    CarouselModule,
+    NzLayoutModule,
+    NzMenuModule,
+    NzTableModule,
+    NzDividerModule,
+    NzDrawerModule,
+    NzPopconfirmModule,
+    NzModalModule,
+    NzMessageModule,
   ],
-  providers: [API],
+  providers: [API, { provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

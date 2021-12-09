@@ -1,10 +1,22 @@
 @import "../../../themes/_theme-variables.css";
+.app {
+}
+.app__header {
+}
 .app__container {
   background-color: var(--bg-color);
+  width: 100%;
+  padding-top: 76px;
 }
-.app-content {
+.app__content {
   position: relative;
-  top: 76px;
+  width: calc(100% - 96px);
+  top: 0;
   left: 96px;
   padding: 0 40px 0 20px;
+}
+.app__router {
+  width: 100%;
+}
+.app__footer {
 }

@@ -1,1 +1,91 @@
-<p>home-page works!</p>
+<div class="home">
+  <div class="home__top-slide"></div>
+  <div class="home__teaching-courses" *hasPermission="'teacher'; user: user">
+    <h1 class="home__slide-title">Khóa đang dạy</h1>
+    <ng-container *ngIf="courseList.length > 0; else elseTemplate">
+      <div class="scroll__container">
+        <div class="scroll__nav-btn left" (click)="prevSlide()">
+          <i class="fas fa-angle-left scroll__nav-icon"></i>
+        </div>
+        <div class="scroll__nav-btn right" (click)="nextSlide()">
+          <i class="fas fa-angle-right scroll__nav-icon"></i>
+        </div>
+        <div class="scroll__slide home__teaching-courses-slide">
+          <div class="scroll__slide-item" *ngFor="let course of courseList">
+            <div
+              routerLink="/my-course"
+              [queryParams]="{ name: course.slug }"
+              class="scroll__slide-image"
+              style="
+              background-image: url({{course?.image}});
+            "
+            ></div>
+            <div class="scroll__slide-detail">
+              <a
+                class="scroll__slide-name"
+                routerLink="/my-course"
+                [queryParams]="{ name: course.slug }"
+              >
+                {{ course.name }}
+              </a>
+              <p class="scroll__slide-members">
+                <i class="fas fa-users scroll__slide-members-icon"></i>
+                {{ course.members }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <div class="scroll__no-slide">
+        <i class="fas fa-exclamation-triangle scroll__no-slide-icon"></i>
+        <h2 class="scroll__no-slide-text">Bạn chưa dạy khóa học nào</h2>
+      </div>
+    </ng-template>
+  </div>
+  <div class="home__registered-courses" *hasPermission="'student'; user: user">
+    <h1 class="home__slide-title">Khóa đang học</h1>
+    <ng-container *ngIf="registeredCourses.length > 0; else elseNoCourseTemplate">
+      <div class="scroll__container">
+        <div class="scroll__nav-btn left" (click)="prevSlide()">
+          <i class="fas fa-angle-left scroll__nav-icon"></i>
+        </div>
+        <div class="scroll__nav-btn right" (click)="nextSlide()">
+          <i class="fas fa-angle-right scroll__nav-icon"></i>
+        </div>
+        <div class="scroll__slide home__teaching-courses-slide">
+          <div class="scroll__slide-item" *ngFor="let course of registeredCourses">
+            <div
+              routerLink="/my-course"
+              [queryParams]="{ name: course.slug }"
+              class="scroll__slide-image"
+              style="
+              background-image: url({{course?.image}});
+            "
+            ></div>
+            <div class="scroll__slide-detail">
+              <a
+                class="scroll__slide-name"
+                routerLink="/my-course"
+                [queryParams]="{ name: course.slug }"
+              >
+                {{ course.name }}
+              </a>
+              <p class="scroll__slide-members">
+                <i class="fas fa-users scroll__slide-members-icon"></i>
+                {{ course.members }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #elseNoCourseTemplate>
+      <div class="scroll__no-slide">
+        <i class="fas fa-exclamation-triangle scroll__no-slide-icon"></i>
+        <h2 class="scroll__no-slide-text">Bạn chưa đăng ký khóa học nào</h2>
+      </div>
+    </ng-template>
+  </div>
+</div>

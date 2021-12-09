@@ -1,0 +1,163 @@
+<app-spinner></app-spinner>
+<div class="courses-manager">
+  <div class="courses-manager__header">
+    <h1 class="courses-manager__heading">Quản lí khóa học bạn đang dạy</h1>
+    <button class="courses-manager__add-btn btn btn-primary" (click)="open()">
+      <i class="fas fa-plus courses-manager__add-icon"></i>Thêm khóa học
+    </button>
+  </div>
+  <ng-container *ngIf="courseList.length > 0; else elseNoCourseTemplate">
+    <div class="course-manager__course-list">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-lg-3" *ngFor="let course of courseList">
+            <div
+              class="course-manager__course-item"
+              routerLink="/my-course"
+              [queryParams]="{ name: course.slug }"
+              style="
+              background-image: url({{course?.image}});
+            "
+            >
+              <div class="course-manager__course-control">
+                <div
+                  class="course-manager__course-control-btn"
+                  (click)="$event.stopPropagation(); toggleEdit(course._id)"
+                >
+                  <i
+                    class="fas fa-edit course-manager__course-control-icon"
+                  ></i>
+                </div>
+                <div
+                  class="course-manager__course-control-btn"
+                  (click)="$event.stopPropagation()"
+                >
+                  <i
+                    class="fas fas fa-times course-manager__course-control-icon"
+                  ></i>
+                </div>
+              </div>
+            </div>
+            <div class="course-manager__course-detail">
+              <a
+                class="course-manager__course-name"
+                routerLink="/my-course"
+                [queryParams]="{ name: course.slug }"
+              >
+                {{ course.name }}
+              </a>
+              <p class="course-manager__course-members">
+                <i class="fas fa-users course-manager__course-members-icon"></i>
+                {{ course.members }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #elseNoCourseTemplate>
+    <div class="course-manager__no-courses">
+      <i
+        class="fas fa-exclamation-triangle course-manager__no-courses-icon"
+      ></i>
+      <h2 class="course-manager__no-courses-text">Bạn chưa dạy khóa học nào</h2>
+    </div>
+  </ng-template>
+</div>
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  nzPlacement="right"
+  nzTitle="{{ isEdit ? 'Cập nhật khóa học' : 'Thêm khóa học' }}"
+  (nzOnClose)="close()"
+  [nzWidth]="600"
+>
+  <div class="add-course-container">
+    <form
+      [formGroup]="formCourse"
+      class="add-course-form"
+      (ngSubmit)="submitForm()"
+    >
+      <div class="form__group">
+        <label class="form__label" for="name">Tên khóa học</label>
+        <input
+          class="form__input"
+          type="text"
+          id="name"
+          formControlName="name"
+          [(ngModel)]="selectedCourse.name"
+          placeholder="Tên khóa học..."
+        />
+      </div>
+      <div class="form__group">
+        <label class="form__label" for="description">Mô tả khóa học</label>
+        <textarea
+          class="form__textarea"
+          rows="4"
+          id="description"
+          formControlName="description"
+          [(ngModel)]="selectedCourse.description"
+          placeholder="Mô tả khóa học..."
+        ></textarea>
+      </div>
+      <div class="form__group">
+        <label class="form__label">Thêm ảnh khóa học</label>
+        <ng-container
+          *ngIf="!currentImageUpload?.url; else elseNoCurrentImageTemplate"
+        >
+          <ng-container *ngIf="selectedCourse.image===''; else elseNoImageTemplate">
+            <label class="form__image-btn" for="image"
+              ><i class="fas fa-plus form__image-icon"></i
+            ></label>
+            <input
+              class="form__file"
+              type="file"
+              id="image"
+              (change)="upload($event)"
+            />
+          </ng-container>
+          <ng-template #elseNoImageTemplate>
+            <div class="form__image-box">
+              <img
+                src="{{ selectedCourse?.image }}"
+                alt=""
+                class="form__image"
+              />
+              <div class="form__image-middle">
+                <button
+                  type="button"
+                  class="form__image-middle-btn btn btn-sm btn-danger"
+                  (click)="deleteImage()"
+                >
+                  Xóa
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+        <ng-template #elseNoCurrentImageTemplate>
+          <div class="form__image-box">
+            <img
+              src="{{ currentImageUpload?.url }}"
+              alt=""
+              class="form__image"
+            />
+            <div class="form__image-middle">
+              <button
+                type="button"
+                class="form__image-middle-btn btn btn-sm btn-danger"
+                (click)="deleteImage()"
+              >
+                Xóa
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      <button class="form__btn-submit btn btn-primary my-2" type="submit">
+        {{ isEdit ? "Cập nhật khóa học này" : "Thêm khóa học này" }}
+      </button>
+    </form>
+  </div>
+</nz-drawer>

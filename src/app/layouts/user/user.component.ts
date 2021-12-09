@@ -9,7 +9,6 @@ import { User } from '../../utils/models/user/user.model';
 })
 export class UserComponent implements OnInit {
   user: User = null;
-  role: string = '';
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -19,10 +18,8 @@ export class UserComponent implements OnInit {
     if (localStorage.getItem('token')) {
       this.authService.getMe().subscribe((res: any) => {
         this.user = null;
-        this.role = '';
         if (res && res instanceof Object) {
           this.user = res;
-          this.role = res.role;
         }
       });
     }

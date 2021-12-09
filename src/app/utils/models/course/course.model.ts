@@ -2,7 +2,7 @@ export class Course {
   _id: string = '';
   belongToId: string = '';
   name: string = '';
-  desciption: string = '';
+  description: string = '';
   image: string = '';
   slug: string = '';
   rating: number = 0;
@@ -12,7 +12,7 @@ export class Course {
     d = d || {};
     this._id = d._id || '';
     this.name = d.name || '';
-    this.desciption = d.desciption || '';
+    this.description = d.description || '';
     this.image = d.image || '';
     this.slug = d.slug || '';
     this.rating = d.rating || 0;

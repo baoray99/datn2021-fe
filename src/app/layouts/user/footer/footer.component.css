@@ -1,6 +1,7 @@
 @import "../../../../themes/_theme-variables.css";
 .footer {
   --height: 32px;
+  background-color: var(--white-color);
   height: var(--height);
   position: fixed;
   bottom: 0;

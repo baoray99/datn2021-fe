@@ -12,12 +12,12 @@ import {
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
-  @Input('role') set role(value: any) {
-    this._role = value;
+  @Input('user') set user(value: any) {
+    this._user = value;
   }
-  private _role: string;
-  get role() {
-    return this._role;
+  private _user: string;
+  get user() {
+    return this._user;
   }
   sidebarItems: any;
   isIconActive: boolean = false;
@@ -35,16 +35,6 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     } else icon.style.transform = 'scale(1) rotate(0)';
   }
   ngAfterViewInit(): void {
-    const sidebarItems =
-      document.querySelectorAll<HTMLElement>('.sidebar__btn');
-    sidebarItems.forEach((item) => {
-      item.addEventListener('click', function () {
-        document
-          .querySelector('.sidebar__btn.active')
-          .classList.remove('active');
-        this.classList.add('active');
-      });
-    });
     const dropdownContent = document.querySelector<HTMLElement>(
       '.sidebar__dropdown-content'
     );

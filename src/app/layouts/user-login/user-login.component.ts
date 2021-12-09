@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../utils/services/aas-network/auth/auth.service';
 
 @Component({
@@ -10,7 +11,11 @@ import { AuthService } from '../../utils/services/aas-network/auth/auth.service'
 export class UserLoginComponent implements OnInit {
   isLogin: boolean = true;
   loginForm!: FormGroup;
-  constructor(private authService: AuthService, private fb: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required]],
@@ -44,6 +49,7 @@ export class UserLoginComponent implements OnInit {
               localStorage.setItem('token', JSON.stringify(res?.token));
               localStorage.setItem('isLogined', JSON.stringify(true));
             }
+            this.router.navigate(['/home']);
           });
       }
       if (!this.isLogin) {
@@ -52,6 +58,7 @@ export class UserLoginComponent implements OnInit {
           .subscribe((res: any) => {
             if (res) {
               console.log('register success');
+              this.changeStatus();
             }
           });
       }

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/utils/models/user/user.model';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     return this._user;
   }
   isLogined: boolean = false;
-  constructor() {}
+  constructor(private router: Router) {}
   ngOnInit(): void {
     this.isLogined = JSON.parse(localStorage.getItem('isLogined'));
   }
@@ -52,6 +52,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
+  logOut() {
+    window.localStorage.clear();
   }
   onFocusSearch(): void {
     document.querySelector<HTMLElement>(

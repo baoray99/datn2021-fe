@@ -1,0 +1,146 @@
+@import "../../../../themes/_theme-variables.css";
+
+.lession-manager {
+  position: relative;
+  display: flex;
+  padding: 0 44px 68px;
+  height: auto;
+}
+.lession-manager__detail {
+}
+.lession-manager__header {
+}
+.lession-manager__course-name {
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.lession-manager__course-description {
+  margin-bottom: 20px;
+}
+.lession-manager__content {
+}
+.lession-manager__title {
+  font-weight: 600;
+}
+.lession-manager__count {
+  display: flex;
+  align-items: center;
+}
+.fa-circle {
+  margin-right: 12px;
+  font-size: 4px;
+  color: var(--text-color);
+}
+.lession-manager__list {
+}
+.lession-manager__item {
+  position: relative;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  background-color: var(--white-color);
+  border-radius: 5px;
+  border: 1px solid var(--border-item);
+  width: 100%;
+  display: flex;
+  transition: all 0.2s ease;
+  align-items: center;
+  justify-content: space-between;
+}
+.lession-manager__item:hover .lession-manager__item-controls {
+  display: block;
+}
+.lession-manager__item-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+.lession-manager__item-controls {
+  display: none;
+}
+.lession-manager__item-btn {
+  cursor: pointer;
+  margin: 0 5px;
+}
+.lession-manager__item-edit-icon {
+  font-size: 16px;
+  color: var(--primary-color);
+}
+.lession-manager__item-delete-icon {
+  font-size: 16px;
+  color: var(--danger-color);
+}
+.lession-manager__item-edit-form {
+  display: block;
+  width: 100%;
+}
+
+.lession-manager__add-btn {
+}
+.lession-manager__add-icon {
+}
+.lession-manager__non {
+}
+.lession-manager__course {
+  position: sticky;
+  position: -webkit-sticky;
+  margin-top: 10px;
+  top: 86px;
+  right: 0;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lession-manager__course-img {
+  border-radius: 10px;
+}
+.lession-manager__course-detail {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px 0;
+}
+.lession-manager__course-free {
+  font-weight: 500;
+  font-size: 32px;
+  color: var(--primary-color);
+  text-align: center;
+  margin: 16px 0;
+}
+.lession-manager__course-list-detail {
+  margin: 0 auto;
+}
+.lession-manager__course-detail-item {
+}
+.lession-manager__course-detail-icon {
+  width: 30px;
+}
+.lession-form__modal {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  z-index: 15;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+}
+.lession-form {
+  display: block;
+  margin: auto;
+  height: auto;
+  padding: 12px 16px;
+  background-color: var(--white-color);
+  width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 -4px 32px rgb(0 0 0 / 20%);
+  transform-origin: center;
+  animation: zoomIn 0.2s ease;
+}
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}

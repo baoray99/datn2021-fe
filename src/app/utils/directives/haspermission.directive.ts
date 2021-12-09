@@ -26,19 +26,29 @@ export class HaspermissionDirective implements OnInit {
     return this._hasPermission;
   }
   @Input()
-  set hasPermissionRole(value: any) {
-    this._hasPermissionRole = value;
+  set hasPermissionUser(value: any) {
+    this._hasPermissionUser = value;
     this.updateView();
   }
-  private _hasPermissionRole: string;
-  get hasPermissionRole() {
-    return this._hasPermissionRole;
+  private _hasPermissionUser: User;
+  get hasPermissionUser() {
+    return this._hasPermissionUser;
   }
   ngOnInit(): void {}
   private updateView() {
     if (this.checkPermission()) {
       if (this.isHidden) {
         this.viewContainer.createEmbeddedView(this.templateRef);
+        const sidebarItems =
+          document.querySelectorAll<HTMLElement>('.sidebar__btn');
+        sidebarItems.forEach((item) => {
+          item.addEventListener('click', function () {
+            document
+              .querySelector('.sidebar__btn.active')
+              .classList.remove('active');
+            this.classList.add('active');
+          });
+        });
         this.isHidden = false;
       }
     } else {
@@ -48,10 +58,10 @@ export class HaspermissionDirective implements OnInit {
   }
   private checkPermission() {
     let hasPermission = false;
-    if (this.hasPermission && this.hasPermissionRole) {
+    if (this.hasPermission && this.hasPermissionUser) {
       if (
         this.hasPermission.toUpperCase() ==
-        this.hasPermissionRole.toUpperCase()
+        this.hasPermissionUser.role.toUpperCase()
       ) {
         hasPermission = true;
       }

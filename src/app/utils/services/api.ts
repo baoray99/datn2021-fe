@@ -74,7 +74,7 @@ export class API {
   put(url, data) {
     data = JSON.stringify(data);
     return this.http
-      .post(this.config.API_URL + url, data, this.getRequestOptions())
+      .put(this.config.API_URL + url, data, this.getRequestOptions())
       .pipe(catchError(this.handleError));
   }
 
@@ -87,7 +87,7 @@ export class API {
   }
 
   //DELETE method
-  delete(url, param = '') {
+  delete(url) {
     var token = this.getToken();
 
     let options = {
@@ -95,9 +95,7 @@ export class API {
         'Content-Type': 'application/json',
         Authorization: token,
       }),
-      body: JSON.stringify(param),
     };
-
     return this.http
       .delete(this.config.API_URL + url, options)
       .pipe(catchError(this.handleError));

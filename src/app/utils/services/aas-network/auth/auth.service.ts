@@ -19,26 +19,6 @@ const USER_DELETE = ServicePath.AUTH_SERVICE;
 })
 export class AuthService {
   constructor(private api: API) {}
-  // private user: User;
-  // private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
-
-  // user$: Observable<User> = this.userSubject.asObservable();
-
-  // updateData() {
-  //   this.userSubject.next(this.user);
-  // }
-  // fecthUser() {
-  //   this.getMe().subscribe(
-  //     (res: any) => {
-  //       this.user = res;
-  //       this.updateData();
-  //     },
-  //     (error) => {
-  //       this.user = null;
-  //       this.updateData();
-  //     }
-  //   );
-  // }
   //GET user by role
   getUsersByRole() {
     const url = USER_BY_ROLE;

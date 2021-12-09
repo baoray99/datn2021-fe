@@ -4,6 +4,7 @@
   --white-color: #fff;
   --gray-color: #666;
   --primary-color: #567df4;
+  --danger-color: #ff385c;
   --bg-color: #f7fafc;
   --text-color: #333;
   --sidebar-text: #404040;
@@ -11,6 +12,7 @@
   --sidebar-active: #e8ebed;
   --icon-color: #82919b;
   --border-input: rgba(22, 24, 35, 0.06);
+  --border-item: rgba(22, 24, 35, 0.1);
   --header-learn: #29303b;
   --course-heading: #b5f1f4;
 }

@@ -4,6 +4,8 @@ import { API } from '../../api';
 
 const COURSE_LIST = ServicePath.COURSE_SERVICE;
 const COURSE_BY_SLUG = ServicePath.COURSE_SERVICE;
+const COURSE_BY_TEACHER = ServicePath.COURSE_SERVICE;
+const COURSE_BY_ID = ServicePath.COURSE_SERVICE + '/id';
 const COURSE_ADD = ServicePath.COURSE_SERVICE;
 const COURSE_UPDATE = ServicePath.COURSE_SERVICE;
 const COURSE_DELETE = ServicePath.COURSE_SERVICE;
@@ -19,13 +21,21 @@ export class CourseManagerService {
     const url = COURSE_LIST;
     return this.api.get(url);
   }
-
+  //GET course by Id
+  getCourseById(id: string) {
+    const url = COURSE_BY_ID + `/${id}`;
+    return this.api.get(url);
+  }
   //GET course by slug
   getCourseBySlug(slug: string) {
     const url = COURSE_BY_SLUG + `/${slug}`;
     return this.api.get(url);
   }
 
+  getCourseByTeacherId(id: string) {
+    const url = COURSE_BY_TEACHER + `/teacher/${id}`;
+    return this.api.get(url);
+  }
   //POST course
   createCourse(data) {
     const url = COURSE_ADD;

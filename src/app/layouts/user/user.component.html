@@ -3,9 +3,9 @@
     <app-header [user]="user"></app-header>
   </div>
   <div class="app__container">
-    <app-sidebar [role]="role"></app-sidebar>
-    <div class="app-content">
-      <router-outlet></router-outlet>
+    <app-sidebar [user]="user"></app-sidebar>
+    <div class="app__content">
+      <router-outlet class="app__router"></router-outlet>
     </div>
   </div>
   <div class="app__footer">
