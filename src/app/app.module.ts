@@ -48,6 +48,7 @@ import { environment } from '../environments/environment';
 import { LessionManagerPageComponent } from './service-pages/service-enduser/lession-manager-page/lession-manager-page.component';
 import { CoursePageComponent } from './service-pages/service-enduser/course-page/course-page.component';
 import { SpinnerComponent } from './layouts/extensions/spinner/spinner.component';
+import { LessionPageComponent } from './service-pages/service-enduser/lession-page/lession-page.component';
 registerLocaleData(en);
 
 @NgModule({
@@ -68,6 +69,7 @@ registerLocaleData(en);
     HaspermissionDirective,
     CoursePageComponent,
     SpinnerComponent,
+    LessionPageComponent,
   ],
   imports: [
     BrowserModule,

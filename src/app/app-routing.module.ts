@@ -9,6 +9,7 @@ import { LessionManagerPageComponent } from './service-pages/service-enduser/les
 import { HomePageComponent } from './service-pages/service-enduser/home-page/home-page.component';
 import { LearnPageComponent } from './service-pages/service-enduser/learn-page/learn-page.component';
 import { CoursePageComponent } from './service-pages/service-enduser/course-page/course-page.component';
+import { LessionPageComponent } from './service-pages/service-enduser/lession-page/lession-page.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'my-courses', component: CourseManagerPageComponent },
       { path: 'my-course', component: LessionManagerPageComponent },
       { path: 'courses', component: CoursePageComponent },
+      { path: 'courses/:slug', component: LessionPageComponent },
     ],
   },
   {
@@ -28,9 +30,9 @@ const routes: Routes = [
     component: UserLoginComponent,
   },
   {
-    path: 'learn',
+    path: 'learn/:slug',
     component: UserLearnComponent,
-    children: [{ path: 'html-css', component: LearnPageComponent }],
+    children: [{ path: '', component: LearnPageComponent }],
   },
 ];
 

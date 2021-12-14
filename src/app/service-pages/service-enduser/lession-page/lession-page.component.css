@@ -1,0 +1,119 @@
+@import "../../../../themes/_theme-variables.css";
+
+.lession-page {
+  position: relative;
+  display: flex;
+  padding: 0 44px 68px;
+  height: auto;
+}
+.lession-page__detail {
+}
+.lession-page__header {
+}
+.lession-page__course-name {
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.lession-page__course-description {
+  margin-bottom: 20px;
+}
+.lession-page__content {
+}
+.lession-page__title {
+  font-weight: 600;
+}
+.lession-page__count {
+  display: flex;
+  align-items: center;
+}
+.fa-circle {
+  margin-right: 12px;
+  font-size: 4px;
+  color: var(--text-color);
+}
+.lession-page__list {
+}
+.lession-page__item {
+  position: relative;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  background-color: var(--white-color);
+  border-radius: 5px;
+  border: 1px solid var(--border-item);
+  width: 100%;
+  display: flex;
+  transition: all 0.2s ease;
+  align-items: center;
+  justify-content: space-between;
+}
+.lession-page__item:hover .lession-page__item-controls {
+  display: block;
+}
+.lession-page__item-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+.lession-page__item-controls {
+  display: none;
+}
+.lession-page__item-btn {
+  cursor: pointer;
+  margin: 0 5px;
+}
+.lession-page__item-edit-icon {
+  font-size: 16px;
+  color: var(--primary-color);
+}
+.lession-page__item-delete-icon {
+  font-size: 16px;
+  color: var(--danger-color);
+}
+.lession-page__item-edit-form {
+  display: block;
+  width: 100%;
+}
+
+.lession-page__add-btn {
+}
+.lession-page__add-icon {
+}
+.lession-page__non {
+}
+.lession-page__course {
+  position: sticky;
+  position: -webkit-sticky;
+  margin-top: 10px;
+  top: 86px;
+  right: 0;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lession-page__course-img {
+  border-radius: 10px;
+}
+.lession-page__btn-dangky {
+  margin-top: 16px;
+}
+.lession-page__course-detail {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px 0;
+}
+.lession-page__course-free {
+  font-weight: 500;
+  font-size: 32px;
+  color: var(--primary-color);
+  text-align: center;
+  margin: 16px 0;
+}
+.lession-page__course-list-detail {
+  margin: 0 auto;
+}
+.lession-page__course-detail-item {
+}
+.lession-page__course-detail-icon {
+  width: 30px;
+}

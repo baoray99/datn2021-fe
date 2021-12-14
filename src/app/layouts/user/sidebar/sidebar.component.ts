@@ -42,7 +42,16 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     const btnAddAct = document.querySelector<HTMLElement>(
       '.sidebar__btn-add-act'
     );
-
+    const sidebarItems =
+      document.querySelectorAll<HTMLElement>('.sidebar__btn');
+    sidebarItems.forEach((item) => {
+      item.addEventListener('click', function () {
+        document
+          .querySelector('.sidebar__btn.active')
+          .classList.remove('active');
+        this.classList.add('active');
+      });
+    });
     window.addEventListener('mouseup', function (event) {
       if (
         event.target != dropdownContent &&

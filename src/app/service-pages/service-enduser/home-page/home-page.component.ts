@@ -5,7 +5,6 @@ import { User } from 'src/app/utils/models/user/user.model';
 import { AuthService } from 'src/app/utils/services/aas-network/auth/auth.service';
 import { CourseManagerService } from 'src/app/utils/services/aas-network/course-manager/course-manager.service';
 
-var i = 0;
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -42,16 +41,18 @@ export class HomePageComponent implements OnInit, AfterViewInit {
     },
     nav: true,
   };
-  courseList: Course[] = [];
-  userId: string = '';
   user: User = null;
+  courseList: Course[] = [];
   registeredCourses: Course[] = [];
+  popularCourses: Course[] = [];
+  isRegistered: boolean = false;
   constructor(
     private courseService: CourseManagerService,
     private authService: AuthService
   ) {}
   ngOnInit(): void {
     this.getMe();
+    this.getPopularCourse();
   }
   ngAfterViewInit(): void {}
   nextSlide() {
@@ -75,12 +76,14 @@ export class HomePageComponent implements OnInit, AfterViewInit {
   getMe() {
     if (window.localStorage.getItem('token')) {
       this.authService.getMe().subscribe((res: any) => {
-        this.userId = '';
         this.user = null;
         if (res && res instanceof Object) {
-          this.userId = res._id;
           this.user = res;
-          this.getCoursesByTeacherId(this.userId);
+          if (this.user.role === 'teacher') {
+            this.getCoursesByTeacherId(this.user._id);
+          } else if (this.user.role === 'student') {
+            this.getRegisteredCourse(this.user._id);
+          }
         }
       });
     }
@@ -95,8 +98,8 @@ export class HomePageComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  getRegisteredCourse() {
-    this.authService.getRegisteredCourses().subscribe((res: any) => {
+  getRegisteredCourse(id: string) {
+    this.authService.getRegisteredCourses(id).subscribe((res: any) => {
       this.registeredCourses = [];
       if (res && res.registeredCourses instanceof Array) {
         res.registeredCourses.forEach((item) => {
@@ -104,5 +107,37 @@ export class HomePageComponent implements OnInit, AfterViewInit {
         });
       }
     });
+  }
+  getPopularCourse() {
+    this.courseService.getPopularCourse().subscribe(
+      (res: any) => {
+        this.popularCourses = [];
+        if (res && res instanceof Array) {
+          res.forEach((item) => {
+            this.popularCourses.push(new Course(item));
+          });
+        }
+        // if (this.user) {
+        //   console.log(this.registeredCourses, this.popularCourses);
+
+        //   this.popularCourses = this.popularCourses.filter((x) => {
+        //     this.registeredCourses.indexOf(x) > 0;
+        //     console.log(this.registeredCourses.indexOf(x));
+        //   });
+        // }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  checkRegisterCourse(slug: string) {
+    if (this.user && this.user instanceof Object) {
+      this.user.registeredCourses.forEach((item) => {
+        if (item.slug === slug) {
+          this.isRegistered = true;
+        } else this.isRegistered = false;
+      });
+    }
   }
 }

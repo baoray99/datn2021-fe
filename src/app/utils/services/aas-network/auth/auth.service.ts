@@ -8,6 +8,7 @@ const USER_LOGIN = ServicePath.AUTH_SERVICE + '/login';
 const USER_REGISTER = ServicePath.AUTH_SERVICE + '/register';
 const USER_UPDATE = ServicePath.AUTH_SERVICE;
 const USER_COURSE_LIST = ServicePath.AUTH_SERVICE + '/my-courses';
+const REGISTER_COURSE= ServicePath.AUTH_SERVICE + '/registered-course';
 const USER_ADD_COURSE = ServicePath.AUTH_SERVICE;
 const USER_BY_ROLE = ServicePath.AUTH_SERVICE;
 const USER_DETAIL = ServicePath.AUTH_SERVICE;
@@ -56,14 +57,14 @@ export class AuthService {
   }
 
   //get user's registed coures
-  getRegisteredCourses() {
-    const url = USER_COURSE_LIST;
+  getRegisteredCourses(id: string) {
+    const url = REGISTER_COURSE + `/${id}`;
     return this.api.get(url);
   }
 
   //add to my registered courses
   addRegisteredCourse(data) {
     const url = USER_ADD_COURSE;
-    return this.api.post(url, data);
+    return this.api.put(url, data);
   }
 }

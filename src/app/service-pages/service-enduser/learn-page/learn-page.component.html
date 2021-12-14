@@ -33,14 +33,18 @@
   <ul class="list-course">
     <div class="list-course__heading">
       <div class="list-course__description">
-        <h3 class="list-course__name">HTML, CSS</h3>
+        <h3 class="list-course__name">{{ course?.name }}</h3>
         <p class="list-course__progress">
-          Hoàn thành <strong>1/113</strong> bài học <strong>(100%)</strong>
+          Hoàn thành <strong>1/{{ lessionList.length }}</strong> bài học
+          <strong>(100%)</strong>
         </p>
       </div>
       <div class="list-course__btn-collapse" (click)="collapseCoures()">
         <i class="fas fa-arrow-right list-course__collapse-icon"></i>
       </div>
     </div>
+    <li class="list-course-item" *ngFor="let lession of lessionList">
+      {{ lession?.name }}
+    </li>
   </ul>
 </div>

@@ -1,4 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Course } from 'src/app/utils/models/course/course.model';
+import { Lession } from 'src/app/utils/models/lession/lession.model';
+import { CourseManagerService } from 'src/app/utils/services/aas-network/course-manager/course-manager.service';
+import { LessionManagerService } from 'src/app/utils/services/aas-network/lession-manager/lession-manager.service';
 
 @Component({
   selector: 'app-learn-page',
@@ -6,12 +11,20 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
   styleUrls: ['./learn-page.component.css'],
 })
 export class LearnPageComponent implements OnInit, AfterViewInit {
-  constructor() {}
+  constructor(
+    private route: ActivatedRoute,
+    private courseService: CourseManagerService,
+    private lessionService: LessionManagerService
+  ) {}
   isCollapse: boolean = false;
-
-  ngOnInit(): void {}
+  slug: string = '';
+  course: Course;
+  lessionList: Lession[] = [];
+  ngOnInit(): void {
+    this.slug = this.route.snapshot.paramMap.get('slug');
+    this.getCourseBySlug(this.slug);
+  }
   ngAfterViewInit(): void {
-    var _this = this;
     const tabs = document.querySelectorAll<HTMLElement>('.tab-item');
     const line = document.querySelector<HTMLElement>('.tab-line');
     const activeTab = document.querySelector<HTMLElement>('.tab-item.active');
@@ -58,5 +71,34 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
     btnExpand.classList.remove('active');
     viewCourse.style.height = '65vh';
     viewCourse.style.padding = '0 8.5%';
+  }
+  getCourseBySlug(slug: string) {
+    this.courseService.getCourseBySlug(slug).subscribe(
+      (res: any) => {
+        this.course = null;
+        if (res && res instanceof Object) {
+          this.course = new Course(res);
+          this.getLessionByCourseId(this.course._id);
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  getLessionByCourseId(id: string) {
+    this.lessionService.getLessionByCourseId(id).subscribe(
+      (res: any) => {
+        this.lessionList = [];
+        if (res && res instanceof Array) {
+          res.forEach((item) => {
+            this.lessionList.push(new Lession(item));
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
