@@ -20,6 +20,7 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
   slug: string = '';
   course: Course;
   lessionList: Lession[] = [];
+  currentVideo: string = '';
   ngOnInit(): void {
     this.slug = this.route.snapshot.paramMap.get('slug');
     this.getCourseBySlug(this.slug);
@@ -41,33 +42,34 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
       });
     });
   }
-  collapseCoures(): void {
+  collapseLession(): void {
+    const content = document.querySelector<HTMLElement>('.content');
     const viewCourse = document.querySelector<HTMLElement>('.view-course');
-    const listCourse = document.querySelector<HTMLElement>('.list-course');
+    const lessions = document.querySelector<HTMLElement>('.lessions');
     const btnExpand = document.querySelector<HTMLElement>(
       '.view-course__expand-btn'
     );
     this.isCollapse = !this.isCollapse;
     if (this.isCollapse) {
-      listCourse.style.width = '0';
-      listCourse.style.flex = '0';
+      lessions.style.display = 'none';
+      content.classList.add('col');
+      content.classList.add('col-lg-12');
       viewCourse.style.height = '70vh';
       viewCourse.style.padding = '0 18%';
       btnExpand.classList.add('active');
-    } else {
-      listCourse.style.width = '100%';
-      listCourse.style.flex = '1';
     }
   }
-  expandListCourse(): void {
+  expandLession(): void {
+    const content = document.querySelector<HTMLElement>('.content');
     const viewCourse = document.querySelector<HTMLElement>('.view-course');
-    const listCourse = document.querySelector<HTMLElement>('.list-course');
+    const lessions = document.querySelector<HTMLElement>('.lessions');
     const btnExpand = document.querySelector<HTMLElement>(
       '.view-course__expand-btn'
     );
     this.isCollapse = false;
-    listCourse.style.width = '100%';
-    listCourse.style.flex = '1';
+    lessions.style.display = 'block';
+    content.classList.remove('col');
+    content.classList.remove('col-lg-12');
     btnExpand.classList.remove('active');
     viewCourse.style.height = '65vh';
     viewCourse.style.padding = '0 8.5%';
@@ -87,6 +89,8 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
     );
   }
   getLessionByCourseId(id: string) {
+    const youtubeFrame =
+      document.querySelector<HTMLIFrameElement>('.view-course-ytb');
     this.lessionService.getLessionByCourseId(id).subscribe(
       (res: any) => {
         this.lessionList = [];
@@ -94,11 +98,20 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
           res.forEach((item) => {
             this.lessionList.push(new Lession(item));
           });
+          this.currentVideo = this.lessionList[0].videoLink;
+          youtubeFrame.src =
+            'https://www.youtube.com/embed/' + this.currentVideo;
         }
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+  changeCurrentVideo(link: string) {
+    const youtubeFrame =
+      document.querySelector<HTMLIFrameElement>('.view-course-ytb');
+    this.currentVideo = link;
+    youtubeFrame.src = 'https://www.youtube.com/embed/' + this.currentVideo;
   }
 }

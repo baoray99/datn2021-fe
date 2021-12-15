@@ -4,6 +4,8 @@ import { Course } from 'src/app/utils/models/course/course.model';
 import { User } from 'src/app/utils/models/user/user.model';
 import { AuthService } from 'src/app/utils/services/aas-network/auth/auth.service';
 import { CourseManagerService } from 'src/app/utils/services/aas-network/course-manager/course-manager.service';
+import 'lodash';
+declare var _: any;
 
 @Component({
   selector: 'app-home-page',
@@ -11,6 +13,7 @@ import { CourseManagerService } from 'src/app/utils/services/aas-network/course-
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit, AfterViewInit {
+  lodash = _;
   customOptions: OwlOptions = {
     loop: false,
     mouseDrag: false,
@@ -51,8 +54,11 @@ export class HomePageComponent implements OnInit, AfterViewInit {
     private authService: AuthService
   ) {}
   ngOnInit(): void {
-    this.getMe();
-    this.getPopularCourse();
+    if (localStorage.getItem('token')) {
+      this.getMe();
+    } else {
+      this.getPopularCourse();
+    }
   }
   ngAfterViewInit(): void {}
   nextSlide() {
@@ -84,6 +90,7 @@ export class HomePageComponent implements OnInit, AfterViewInit {
           } else if (this.user.role === 'student') {
             this.getRegisteredCourse(this.user._id);
           }
+          this.getPopularCourse();
         }
       });
     }
@@ -117,14 +124,13 @@ export class HomePageComponent implements OnInit, AfterViewInit {
             this.popularCourses.push(new Course(item));
           });
         }
-        // if (this.user) {
-        //   console.log(this.registeredCourses, this.popularCourses);
-
-        //   this.popularCourses = this.popularCourses.filter((x) => {
-        //     this.registeredCourses.indexOf(x) > 0;
-        //     console.log(this.registeredCourses.indexOf(x));
-        //   });
-        // }
+        if (this.user) {
+          this.popularCourses = _.filter(this.popularCourses, (n) => {
+            return !_.some(this.registeredCourses, (kn) => {
+              return n.name === kn.name;
+            });
+          });
+        }
       },
       (error) => {
         console.log(error);

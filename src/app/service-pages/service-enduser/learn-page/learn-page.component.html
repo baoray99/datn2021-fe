@@ -1,50 +1,58 @@
-<div class="container">
-  <div class="content">
-    <div class="view-course">
-      <iframe
-        class="view-course-ytb"
-        src="https://www.youtube.com/embed/R6plN3FvzFY?start=1"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-      <button class="view-course__expand-btn" (click)="expandListCourse()">
-        <span class="icon"><i class="fas fa-arrow-left"></i></span
-        ><span>Nội dung học</span>
-      </button>
-      <div class="relate-content">
-        <div class="tabs">
-          <div class="tab-item active">
-            <span class="tab-item__name">Tổng quan</span>
+<div class="learn-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-9 content">
+        <div class="view-course">
+          <iframe
+            class="view-course-ytb"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <button class="view-course__expand-btn" (click)="expandLession()">
+            <span class="icon"><i class="fas fa-arrow-left"></i></span
+            ><span>Nội dung học</span>
+          </button>
+          <div class="relate-content">
+            <div class="tabs">
+              <div class="tab-item active">
+                <span class="tab-item__name">Tổng quan</span>
+              </div>
+              <div class="tab-item">
+                <span class="tab-item__name">Ghi chú</span>
+              </div>
+              <div class="tab-item">
+                <span class="tab-item__name">Các khóa học liên quan</span>
+              </div>
+              <div class="tab-line"></div>
+            </div>
           </div>
-          <div class="tab-item">
-            <span class="tab-item__name">Ghi chú</span>
-          </div>
-          <div class="tab-item">
-            <span class="tab-item__name">Các khóa học liên quan</span>
-          </div>
-          <div class="tab-line"></div>
         </div>
+      </div>
+      <div class="col-lg-3 lessions">
+        <ul class="list-lession">
+          <div class="list-lession__heading">
+            <div class="list-lession__description">
+              <h3 class="list-lession__name">{{ course?.name }}</h3>
+              <p class="list-lession__progress">
+                Hoàn thành <strong>1/{{ lessionList.length }}</strong> bài học
+                <strong>(100%)</strong>
+              </p>
+            </div>
+            <div class="list-lession__btn-collapse" (click)="collapseLession()">
+              <i class="fas fa-arrow-right list-lession__collapse-icon"></i>
+            </div>
+          </div>
+          <li
+            class="list-lession-item"
+            *ngFor="let lession of lessionList; index as idx"
+            (click)="changeCurrentVideo(lession.videoLink)"
+          >
+            <span>{{ idx + 1 }}. </span>{{ lession?.name }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
-
-  <ul class="list-course">
-    <div class="list-course__heading">
-      <div class="list-course__description">
-        <h3 class="list-course__name">{{ course?.name }}</h3>
-        <p class="list-course__progress">
-          Hoàn thành <strong>1/{{ lessionList.length }}</strong> bài học
-          <strong>(100%)</strong>
-        </p>
-      </div>
-      <div class="list-course__btn-collapse" (click)="collapseCoures()">
-        <i class="fas fa-arrow-right list-course__collapse-icon"></i>
-      </div>
-    </div>
-    <li class="list-course-item" *ngFor="let lession of lessionList">
-      {{ lession?.name }}
-    </li>
-  </ul>
 </div>
