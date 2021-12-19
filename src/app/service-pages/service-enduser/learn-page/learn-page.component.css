@@ -107,6 +107,9 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
+.list-lession-item.active {
+  background-color: var(--active-lession);
+}
 .list-lession-item:hover {
   background-color: var(--border-input);
 }

@@ -91,6 +91,8 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
   getLessionByCourseId(id: string) {
     const youtubeFrame =
       document.querySelector<HTMLIFrameElement>('.view-course-ytb');
+    const listLession =
+      document.querySelectorAll<HTMLElement>('.list-lession-item');
     this.lessionService.getLessionByCourseId(id).subscribe(
       (res: any) => {
         this.lessionList = [];
@@ -101,6 +103,7 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
           this.currentVideo = this.lessionList[0].videoLink;
           youtubeFrame.src =
             'https://www.youtube.com/embed/' + this.currentVideo;
+          listLession[0].classList.add('active');
         }
       },
       (error) => {
