@@ -3,17 +3,20 @@ import { ServicePath } from '../../../common/constant-service-api';
 import { API } from '../../api';
 import { User } from '../../../models/user/user.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Course } from 'src/app/utils/models/course/course.model';
 
 const USER_LOGIN = ServicePath.AUTH_SERVICE + '/login';
 const USER_REGISTER = ServicePath.AUTH_SERVICE + '/register';
 const USER_UPDATE = ServicePath.AUTH_SERVICE;
 const USER_COURSE_LIST = ServicePath.AUTH_SERVICE + '/my-courses';
-const REGISTER_COURSE= ServicePath.AUTH_SERVICE + '/registered-course';
+const REGISTER_COURSE = ServicePath.AUTH_SERVICE + '/registered-course';
+const TEACHING_COURSE = ServicePath.AUTH_SERVICE + '/teaching-course';
 const USER_ADD_COURSE = ServicePath.AUTH_SERVICE;
 const USER_BY_ROLE = ServicePath.AUTH_SERVICE;
 const USER_DETAIL = ServicePath.AUTH_SERVICE;
 const USER_ME = ServicePath.AUTH_SERVICE + '/me';
 const USER_DELETE = ServicePath.AUTH_SERVICE;
+const UNREGISTER_COURSE = ServicePath.AUTH_SERVICE + '/unregister-course';
 
 @Injectable({
   providedIn: 'root',
@@ -57,8 +60,13 @@ export class AuthService {
   }
 
   //get user's registed coures
-  getRegisteredCourses(id: string) {
-    const url = REGISTER_COURSE + `/${id}`;
+  getRegisteredCourses() {
+    const url = REGISTER_COURSE;
+    return this.api.get(url);
+  }
+  //get teaching course
+  getTeachingCourse() {
+    const url = TEACHING_COURSE;
     return this.api.get(url);
   }
 
@@ -66,5 +74,11 @@ export class AuthService {
   addRegisteredCourse(data) {
     const url = USER_ADD_COURSE;
     return this.api.put(url, data);
+  }
+
+  //GEt popular unregister course
+  getPopularCourseWithLogin(registerCourse: any) {
+    const url = UNREGISTER_COURSE;
+    return this.api.post(url, registerCourse);
   }
 }

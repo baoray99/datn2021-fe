@@ -14,7 +14,6 @@ import { LessionManagerService } from 'src/app/utils/services/aas-network/lessio
 export class LessionPageComponent implements OnInit {
   slug: string = '';
   course: Course = null;
-  courseId: string = '';
   lessionList: Lession[] = [];
   userId: string = '';
   constructor(
@@ -43,24 +42,9 @@ export class LessionPageComponent implements OnInit {
     this.courseService.getCourseBySlug(slug).subscribe(
       (res: any) => {
         this.course = null;
-        this.courseId = '';
-        if (res && res instanceof Object) {
+        if (res && res instanceof Object && res.lessions instanceof Array) {
           this.course = res;
-          this.courseId = res._id;
-          this.getLessionByCourseId(this.courseId);
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-  getLessionByCourseId(courseId: string) {
-    this.lessionService.getLessionByCourseId(courseId).subscribe(
-      (res: any) => {
-        this.lessionList = [];
-        if (res && res instanceof Array) {
-          res.forEach((item) => {
+          res.lessions.forEach((item) => {
             this.lessionList.push(new Lession(item));
           });
         }
@@ -79,7 +63,8 @@ export class LessionPageComponent implements OnInit {
         })
         .subscribe(
           (res: any) => {
-            console.log('dang kys khoa hoc thanh cong');
+            console.log('dang ky khoa hoc thanh cong');
+            this.router.navigate([`/learn/${this.slug}`]);
           },
           (error) => {
             console.log(error);

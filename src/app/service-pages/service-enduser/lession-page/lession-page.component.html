@@ -16,9 +16,9 @@
           <div class="lession-page__content">
             <h2 class="lession-page__title">Nội dung khóa học</h2>
             <p class="lession-page__count">
-              <i class="fas fa-circle"></i>{{ lessionList.length }} bài học
+              <i class="fas fa-circle"></i>{{ lessionList?.length }} bài học
             </p>
-            <ng-container *ngIf="lessionList.length > 0; else elseTemplate">
+            <ng-container *ngIf="lessionList?.length > 0; else elseTemplate">
               <ul class="lession-page__list">
                 <li
                   class="lession-page__item"
@@ -59,7 +59,7 @@
               <li class="lession-page__course-detail-item">
                 <i class="fas fa-film lession-page__course-detail-icon"></i>
                 <span
-                  >Tống số <strong>{{ lessionList.length }}</strong> bài
+                  >Tống số <strong>{{ lessionList?.length }}</strong> bài
                   học</span
                 >
               </li>

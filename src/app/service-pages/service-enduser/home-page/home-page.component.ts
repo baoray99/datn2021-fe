@@ -61,20 +61,16 @@ export class HomePageComponent implements OnInit, AfterViewInit {
     }
   }
   ngAfterViewInit(): void {}
-  nextSlide() {
-    const courseItem = document.querySelector<HTMLElement>(
-      '.home__teaching-courses-slide'
-    );
-    courseItem.scrollBy({
+  nextSlide(cl: string) {
+    const slide = document.querySelector<HTMLElement>(`.${cl}`);
+    slide.scrollBy({
       left: 300,
       behavior: 'smooth',
     });
   }
-  prevSlide() {
-    const courseItem = document.querySelector<HTMLElement>(
-      '.home__teaching-courses-slide'
-    );
-    courseItem.scrollBy({
+  prevSlide(cl: any) {
+    const slide = document.querySelector<HTMLElement>(`.${cl}`);
+    slide.scrollBy({
       left: -300,
       behavior: 'smooth',
     });
@@ -85,34 +81,34 @@ export class HomePageComponent implements OnInit, AfterViewInit {
         this.user = null;
         if (res && res instanceof Object) {
           this.user = res;
-          if (this.user.role === 'teacher') {
-            this.getCoursesByTeacherId(this.user._id);
-          } else if (this.user.role === 'student') {
-            this.getRegisteredCourse(this.user._id);
+          if (this.user.role.name === 'teacher') {
+            this.getTeachingCourse();
+          } else if (this.user.role.name === 'student') {
+            this.getRegisteredCourse();
           }
-          this.getPopularCourse();
         }
       });
     }
   }
-  getCoursesByTeacherId(id: string) {
-    this.courseService.getCourseByTeacherId(id).subscribe((res: any) => {
+  getTeachingCourse() {
+    this.authService.getTeachingCourse().subscribe((res: any) => {
       this.courseList = [];
-      if (res && res instanceof Array) {
-        res.forEach((item) => {
+      if (res && res.teachingCourse instanceof Array) {
+        res.teachingCourse.forEach((item) => {
           this.courseList.push(new Course(item));
         });
       }
     });
   }
-  getRegisteredCourse(id: string) {
-    this.authService.getRegisteredCourses(id).subscribe((res: any) => {
+  getRegisteredCourse() {
+    this.authService.getRegisteredCourses().subscribe((res: any) => {
       this.registeredCourses = [];
-      if (res && res.registeredCourses instanceof Array) {
-        res.registeredCourses.forEach((item) => {
+      if (res && res.registeredCourse instanceof Array) {
+        res.registeredCourse.forEach((item) => {
           this.registeredCourses.push(new Course(item));
         });
-      }
+        this.getPopularCourseWithLogin(this.registeredCourses);
+      }      
     });
   }
   getPopularCourse() {
@@ -124,11 +120,22 @@ export class HomePageComponent implements OnInit, AfterViewInit {
             this.popularCourses.push(new Course(item));
           });
         }
-        if (this.user) {
-          this.popularCourses = _.filter(this.popularCourses, (n) => {
-            return !_.some(this.registeredCourses, (kn) => {
-              return n.name === kn.name;
-            });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  getPopularCourseWithLogin(registeredCourse: any) {
+    const body = {
+      registeredCourses: registeredCourse,
+    };
+    this.authService.getPopularCourseWithLogin(body).subscribe(
+      (res: any) => {
+        this.popularCourses = [];
+        if (res && res instanceof Array) {
+          res.forEach((item) => {
+            this.popularCourses.push(new Course(item));
           });
         }
       },
@@ -139,7 +146,7 @@ export class HomePageComponent implements OnInit, AfterViewInit {
   }
   checkRegisterCourse(slug: string) {
     if (this.user && this.user instanceof Object) {
-      this.user.registeredCourses.forEach((item) => {
+      this.user.registeredCourse.forEach((item) => {
         if (item.slug === slug) {
           this.isRegistered = true;
         } else this.isRegistered = false;

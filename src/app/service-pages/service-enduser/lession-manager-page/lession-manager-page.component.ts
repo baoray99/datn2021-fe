@@ -19,9 +19,10 @@ export class LessionManagerPageComponent implements OnInit {
   lessionForm!: FormGroup;
   selectedLession: Lession = {
     _id: '',
-    belongToId: '',
+    belongTo: null,
     name: '',
-    videoLink: '',
+    comments: [],
+    idVideo: '',
   };
   isVisible = false;
   isEdit = false;
@@ -36,22 +37,22 @@ export class LessionManagerPageComponent implements OnInit {
     this.getCourseBySlug(this.slug);
     this.lessionForm = this.fb.group({
       name: [null, [Validators.required]],
-      videoLink: [null, [Validators.required]],
+      idVideo: [null, [Validators.required]],
     });
   }
   lessionFormSubmit() {
     if (this.lessionForm.valid) {
-      console.log('submit', this.lessionForm.value);
       if (this.isEdit) {
         const updateLession = {
           name: this.lessionForm.value.name,
-          videoLink: this.lessionForm.value.videoLink,
+          idVideo: this.lessionForm.value.idVideo,
         };
         this.lessionService
           .updateLession(this.selectedLession._id, updateLession)
           .subscribe(
             (res: any) => {
               console.log('update success');
+              this.toggleLessionForm();
             },
             (error) => {
               console.log(error);
@@ -59,13 +60,14 @@ export class LessionManagerPageComponent implements OnInit {
           );
       } else {
         const newLession = {
-          belongToId: this.courseId,
+          courseId: this.courseId,
           name: this.lessionForm.value.name,
-          videoLink: this.lessionForm.value.videoLink,
+          idVideo: this.lessionForm.value.idVideo,
         };
         this.lessionService.createLession(newLession).subscribe(
           (res: any) => {
             console.log('create success');
+            this.toggleLessionForm();
           },
           (error) => {
             console.log(error);
@@ -86,9 +88,10 @@ export class LessionManagerPageComponent implements OnInit {
     this.lessionService.getLessionById(id).subscribe((res: any) => {
       this.selectedLession = {
         _id: '',
-        belongToId: '',
+        belongTo: null,
         name: '',
-        videoLink: '',
+        comments: [],
+        idVideo: '',
       };
       if (res && res instanceof Object) {
         this.selectedLession = res;
@@ -110,9 +113,10 @@ export class LessionManagerPageComponent implements OnInit {
       this.isEdit = false;
       this.selectedLession = {
         _id: '',
-        belongToId: '',
+        belongTo: null,
+        comments: [],
         name: '',
-        videoLink: '',
+        idVideo: '',
       };
     }
   }
@@ -121,23 +125,10 @@ export class LessionManagerPageComponent implements OnInit {
       (res: any) => {
         this.course = null;
         this.courseId = '';
-        if (res && res instanceof Object) {
+        if (res && res instanceof Object && res.lessions instanceof Array) {
           this.course = res;
           this.courseId = res._id;
-          this.getLessionByCourseId(this.courseId);
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-  getLessionByCourseId(courseId: string) {
-    this.lessionService.getLessionByCourseId(courseId).subscribe(
-      (res: any) => {
-        this.lessionList = [];
-        if (res && res instanceof Array) {
-          res.forEach((item) => {
+          res.lessions.forEach((item) => {
             this.lessionList.push(new Lession(item));
           });
         }

@@ -519,7 +519,7 @@ ul {
   position: absolute;
   top: 90px;
   transform: translateY(-50%);
-  display: flex;
+  display: none;
   background-color: white;
   height: 36px;
   width: 36px;

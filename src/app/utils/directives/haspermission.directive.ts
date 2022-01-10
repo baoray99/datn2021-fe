@@ -61,7 +61,7 @@ export class HaspermissionDirective implements OnInit {
     if (this.hasPermission && this.hasPermissionUser) {
       if (
         this.hasPermission.toUpperCase() ==
-        this.hasPermissionUser.role.toUpperCase()
+        this.hasPermissionUser.role.name.toUpperCase()
       ) {
         hasPermission = true;
       }

@@ -4,10 +4,10 @@
     <h1 class="home__slide-title">Khóa đang dạy</h1>
     <ng-container *ngIf="courseList.length > 0; else elseTemplate">
       <div class="scroll__container">
-        <div class="scroll__nav-btn left" (click)="prevSlide()">
+        <div class="scroll__nav-btn left" (click)="prevSlide('home__teaching-courses-slide')">
           <i class="fas fa-angle-left scroll__nav-icon"></i>
         </div>
-        <div class="scroll__nav-btn right" (click)="nextSlide()">
+        <div class="scroll__nav-btn right" (click)="nextSlide('home__teaching-courses-slide')">
           <i class="fas fa-angle-right scroll__nav-icon"></i>
         </div>
         <div class="scroll__slide home__teaching-courses-slide">
@@ -30,7 +30,7 @@
               </a>
               <p class="scroll__slide-members">
                 <i class="fas fa-users scroll__slide-members-icon"></i>
-                {{ course.members }}
+                {{ course.totalMember }}
               </p>
             </div>
           </div>
@@ -50,19 +50,19 @@
       *ngIf="registeredCourses.length > 0; else elseNoCourseTemplate"
     >
       <div class="scroll__container">
-        <div class="scroll__nav-btn left" (click)="prevSlide()">
+        <div class="scroll__nav-btn left" (click)="prevSlide('home__registered-courses-slide')">
           <i class="fas fa-angle-left scroll__nav-icon"></i>
         </div>
-        <div class="scroll__nav-btn right" (click)="nextSlide()">
+        <div class="scroll__nav-btn right" (click)="nextSlide('home__registered-courses-slide')">
           <i class="fas fa-angle-right scroll__nav-icon"></i>
         </div>
-        <div class="scroll__slide home__teaching-courses-slide">
+        <div class="scroll__slide home__registered-courses-slide">
           <div
             class="scroll__slide-item"
             *ngFor="let course of registeredCourses"
           >
             <div
-            routerLink="/learn/{{course.slug}}"
+            [routerLink]="['/learn', course.slug]"
               class="scroll__slide-image"
               style="
               background-image: url({{course?.image}});
@@ -71,7 +71,7 @@
             <div class="scroll__slide-detail">
               <a
                 class="scroll__slide-name"
-                routerLink="/learn/{{course.slug}}"
+                [routerLink]="['/learn',course.slug]"
               >
                 {{ course.name }}
               </a>
@@ -87,19 +87,19 @@
       </div>
     </ng-template>
   </div>
-  <div class="home__popular-courses">
+  <div *ngIf="user?.role.name !== 'teacher'" class="home__popular-courses" >
     <h1 class="home__slide-title">Khóa học phổ biến</h1>
-    <div class="scroll__container home__teaching-courses-slide">
-      <div class="scroll__nav-btn left" (click)="prevSlide()">
+    <div class="scroll__container ">
+      <div class="scroll__nav-btn left" (click)="prevSlide('home__popular-courses-slide')">
         <i class="fas fa-angle-left scroll__nav-icon"></i>
       </div>
-      <div class="scroll__nav-btn right" (click)="nextSlide()">
+      <div class="scroll__nav-btn right" (click)="nextSlide('home__popular-courses-slide')">
         <i class="fas fa-angle-right scroll__nav-icon"></i>
       </div>
-      <div class="scroll__slide">
+      <div class="scroll__slide home__popular-courses-slide">
         <div class="scroll__slide-item" *ngFor="let course of popularCourses">
           <div
-            routerLink="/learn/{{course.slug}}"
+            routerLink="/courses/{{course.slug}}"
             class="scroll__slide-image"
             style="
             background-image: url({{course?.image}});
@@ -115,7 +115,7 @@
             </a>
             <p class="scroll__slide-members">
               <i class="fas fa-users scroll__slide-members-icon"></i>
-              {{ course.members }}
+              {{ course.totalMember }}
             </p>
           </div>
         </div>

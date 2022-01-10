@@ -50,14 +50,11 @@
             <option value="" selected disabled hidden>
               --Chọn tư cách của bạn--
             </option>
-            <option value="student">Học viên</option>
-            <option value="teacher">Giảng viên</option>
+            <option value="{{ roleList[2]._id }}">Học viên</option>
+            <option value="{{ roleList[1]._id }}">Giảng viên</option>
           </select>
         </div>
-        <button
-          type="submit"
-          class="form__btn-submit btn btn-primary my-2"
-        >
+        <button type="submit" class="form__btn-submit btn btn-primary my-2">
           {{ isLogin ? "Đăng nhập" : "Đăng ký" }}
         </button>
       </form>

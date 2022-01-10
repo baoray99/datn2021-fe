@@ -10,9 +10,10 @@ export class User {
   facebook: string = '';
   instagram: string = '';
   youtube: string = '';
-  registeredCourses: Array<Course> = [];
+  registeredCourse: Array<Course> = [];
+  teachingCourse: Array<Course> = [];
   email: string = '';
-  role: string = '';
+  role: any;
 
   constructor(d = null) {
     d = d || {};
@@ -27,7 +28,8 @@ export class User {
     this.instagram = d.instagram || '';
     this.youtube = d.youtube || '';
     this.email = d.email || '';
-    this.registeredCourses = d.registeredCourses || [];
-    this.role = d.role || '';
+    this.registeredCourse = d.registeredCourse || [];
+    this.teachingCourse = d.teachingCourse || [];
+    this.role = d.role || null;
   }
 }

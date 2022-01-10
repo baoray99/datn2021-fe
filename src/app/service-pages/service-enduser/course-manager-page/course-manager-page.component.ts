@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { Image } from 'src/app/utils/models/photo/image.model';
+import { User } from 'src/app/utils/models/user/user.model';
 import { AuthService } from 'src/app/utils/services/aas-network/auth/auth.service';
 import { ImageService } from 'src/app/utils/services/aas-network/image/image.service';
 import { Course } from '../../../utils/models/course/course.model';
@@ -24,10 +25,12 @@ export class CourseManagerPageComponent implements OnInit {
   formCourse!: FormGroup;
   selectedCourse: Course = {
     _id: '',
-    belongToId: '',
+    author: null,
     description: '',
     image: '',
-    members: 0,
+    totalMember: 0,
+    lessions: [],
+    members: [],
     name: '',
     rating: 0,
     slug: '',
@@ -54,16 +57,17 @@ export class CourseManagerPageComponent implements OnInit {
       this.authService.getMe().subscribe((res: any) => {
         if (res && res instanceof Object) {
           this.userId = res._id;
-          this.getCoursesByTeacherId(this.userId);
+          this.getTeachingCourse();
         }
       });
     }
   }
-  getCoursesByTeacherId(id: string) {
-    this.courseService.getCourseByTeacherId(id).subscribe((res: any) => {
+  
+  getTeachingCourse() {
+    this.authService.getTeachingCourse().subscribe((res: any) => {
       this.courseList = [];
-      if (res && res instanceof Array) {
-        res.forEach((item) => {
+      if (res && res.teachingCourse instanceof Array) {
+        res.teachingCourse.forEach((item) => {
           this.courseList.push(new Course(item));
         });
       }
@@ -75,10 +79,12 @@ export class CourseManagerPageComponent implements OnInit {
       (res: any) => {
         this.selectedCourse = {
           _id: '',
-          belongToId: '',
+          author: null,
           description: '',
           image: '',
-          members: 0,
+          totalMember: 0,
+          members: [],
+          lessions: [],
           name: '',
           rating: 0,
           slug: '',
@@ -101,10 +107,12 @@ export class CourseManagerPageComponent implements OnInit {
     this.isEdit = false;
     this.selectedCourse = {
       _id: '',
-      belongToId: '',
+      author: null,
       description: '',
       image: '',
-      members: 0,
+      members: [],
+      totalMember: 0,
+      lessions: [],
       name: '',
       rating: 0,
       slug: '',
@@ -112,21 +120,23 @@ export class CourseManagerPageComponent implements OnInit {
   }
   submitForm(): void {
     if (this.formCourse.valid) {
-      console.log(this.formCourse.value, this.currentImageUpload.url);
       if (this.isEdit) {
         const editCourse = {
           name: this.formCourse.value.name,
           description: this.formCourse.value.description,
           image:
-            this.currentImageUpload.url === ''
-              ? 'https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/257381852_2063613163807356_6047570001632965703_n.jpg?_nc_cat=107&_nc_rgb565=1&ccb=1-5&_nc_sid=730e14&_nc_ohc=RAbrfAuy2i8AX9BAPz4&_nc_ht=scontent.fdad2-1.fna&oh=930fc5be40cd09a5cbe3bcd9d1b3a824&oe=61A3430E'
-              : this.currentImageUpload.url,
+            this.selectedCourse.image !== ''
+              ? this.selectedCourse.image
+              : this.currentImageUpload
+              ? this.currentImageUpload.url
+              : 'https://firebasestorage.googleapis.com/v0/b/datn2021-76049.appspot.com/o/course_image%2F257381852_2063613163807356_6047570001632965703_n.jpg?alt=media&token=a4bd388e-d539-4039-aef5-f3ad50ff59a0',
         };
         this.courseService
           .updateCourse(this.selectedCourse._id, editCourse)
           .subscribe(
             (res: any) => {
               console.log('update success');
+              this.close();
             },
             (error) => {
               console.log(error);
@@ -134,12 +144,12 @@ export class CourseManagerPageComponent implements OnInit {
           );
       } else {
         const newCourse = {
-          belongToId: this.userId,
+          author: this.userId,
           name: this.formCourse.value.name,
           description: this.formCourse.value.description,
           image:
             this.currentImageUpload.url === ''
-              ? 'https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/257381852_2063613163807356_6047570001632965703_n.jpg?_nc_cat=107&_nc_rgb565=1&ccb=1-5&_nc_sid=730e14&_nc_ohc=RAbrfAuy2i8AX9BAPz4&_nc_ht=scontent.fdad2-1.fna&oh=930fc5be40cd09a5cbe3bcd9d1b3a824&oe=61A3430E'
+              ? 'https://firebasestorage.googleapis.com/v0/b/datn2021-76049.appspot.com/o/course_image%2F257381852_2063613163807356_6047570001632965703_n.jpg?alt=media&token=a4bd388e-d539-4039-aef5-f3ad50ff59a0'
               : this.currentImageUpload.url,
         };
         this.courseService.createCourse(newCourse).subscribe((res: any) => {

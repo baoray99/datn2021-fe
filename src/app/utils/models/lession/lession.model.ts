@@ -1,13 +1,15 @@
 export class Lession {
   _id: string = '';
-  belongToId: string = '';
+  belongTo: any = null;
   name: string = '';
-  videoLink: string = '';
+  comments: Comment[] = [];
+  idVideo: string = '';
   constructor(d = null) {
     d = d || null;
     this._id = d._id || '';
-    this.belongToId = d.belongToId;
+    this.belongTo = d.belongTo;
     this.name = d.name || '';
-    this.videoLink = d.videoLink || '';
+    this.comments = d.comments || [];
+    this.idVideo = d.idVideo || '';
   }
 }

@@ -14,19 +14,90 @@
             <span class="icon"><i class="fas fa-arrow-left"></i></span
             ><span>Nội dung học</span>
           </button>
-          <div class="relate-content">
-            <div class="tabs">
-              <div class="tab-item active">
-                <span class="tab-item__name">Tổng quan</span>
-              </div>
-              <div class="tab-item">
-                <span class="tab-item__name">Ghi chú</span>
-              </div>
-              <div class="tab-item">
-                <span class="tab-item__name">Các khóa học liên quan</span>
-              </div>
-              <div class="tab-line"></div>
+          
+        </div>
+        <div class="relate-content">
+          <div class="tabs">
+            <div class="tab-item active">
+              <span class="tab-item__name">Tổng quan</span>
             </div>
+            <div class="tab-item">
+              <span class="tab-item__name">Ghi chú</span>
+            </div>
+            <div class="tab-item">
+              <span class="tab-item__name">Các khóa học liên quan</span>
+            </div>
+            <div class="tab-line"></div>
+          </div>
+          <div class="tab-content">
+            <div class="tab-pane comment-tab active">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col col-lg-9">
+                    <h3 class="comment-tab__total">
+                      {{ currentLession.comments.length }} hỏi đáp
+                    </h3>
+                    <div class="comment-tab__input-box">
+                      <img
+                        src="{{ user?.avatar }}"
+                        alt=""
+                        class="comment-tab__input-box-avt"
+                      />
+                      <form
+                        class="comment-tab__input-form"
+                        [formGroup]="formComment"
+                        (ngSubmit)="pushComment()"
+                      >
+                        <input
+                          type="text"
+                          class="comment-tab__input"
+                          placeholder="Bạn có thắc mắc gì trong bài học này?"
+                          (focus)="showBtn()"
+                          formControlName="content"
+                        />
+                        <div class="comment-tab__btn-group">
+                          <button
+                            class="comment-tab__btn-cancel"
+                            (click)="hideBtn()"
+                          >
+                            Hủy
+                          </button>
+                          <button
+                            type="submit"
+                            class="comment-tab__btn-submit"
+                          >
+                            Bình luận
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <ul class="comment-tab__list">
+                      <li
+                        class="comment-tab__item"
+                        *ngFor="let comment of currentLession.comments"
+                      >
+                        <img
+                          class="comment-tab__avt"
+                          src="{{ comment?.user?.avatar }}"
+                          alt=""
+                        />
+                        <div class="comment-tab__content">
+                          <h4 class="comment-tab__content-name">
+                            {{ comment?.user?.name }}
+                          </h4>
+                          <p class="comment-tab__content-text">
+                            {{ comment?.content }}
+                          </p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col col-lg-3"></div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane"></div>
+            <div class="tab-pane"></div>
           </div>
         </div>
       </div>
@@ -46,8 +117,11 @@
           </div>
           <li
             class="list-lession-item"
-            *ngFor="let lession of lessionList; index as idx"
-            (click)="changeCurrentVideo(lession.videoLink)"
+            *ngFor="let lession of lessionList; index as idx; first as isFirst"
+            [ngClass]="isFirst ? 'active' : ''"
+            routerLink="/learn/{{ course.slug }}"
+            [queryParams]="{ _id: lession._id }"
+            (click)="changeCurrentVideo()"
           >
             <span>{{ idx + 1 }}. </span>{{ lession?.name }}
           </li>

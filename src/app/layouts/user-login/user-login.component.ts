@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Role } from 'src/app/utils/models/role/role.model';
+import { RoleManagerService } from 'src/app/utils/services/aas-network/role/role-manager.service';
 import { AuthService } from '../../utils/services/aas-network/auth/auth.service';
 
 @Component({
@@ -11,15 +13,25 @@ import { AuthService } from '../../utils/services/aas-network/auth/auth.service'
 export class UserLoginComponent implements OnInit {
   isLogin: boolean = true;
   loginForm!: FormGroup;
+  roleList: Role[] = [];
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private roleService: RoleManagerService
   ) {}
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required]],
       password: [null, [Validators.required]],
+    });
+    this.roleService.getAllRole().subscribe((res: any) => {
+      this.roleList = [];
+      if (res && res instanceof Array) {
+        res.forEach((item) => {
+          this.roleList.push(new Role(item));
+        });
+      }
     });
   }
   changeStatus(): void {
