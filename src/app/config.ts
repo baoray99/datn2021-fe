@@ -1,3 +1,3 @@
 export const Config = {
-  API_URL: 'https://letslearnbackend.herokuapp.com/',
+  API_URL: 'http://localhost:3000/',
 };

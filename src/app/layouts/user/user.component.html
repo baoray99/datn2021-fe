@@ -11,4 +11,56 @@
   <div class="app__footer">
     <app-footer></app-footer>
   </div>
+  <div class="app_chat-container">
+    <button
+      *ngFor="let item of userList"
+      class="app_chat-btn"
+      (click)="toggleBoxChat(item.name)"
+    >
+      {{ item.name }}
+    </button>
+    <div class="app_chat-box">
+      <div class="app_chat-box-header">
+        <img
+          src="https://www.silcube.com/hubfs/avatars/non-avatar.webp"
+          alt=""
+          class="app_chat-box-avt"
+        />
+        <span>Chatbot</span>
+      </div>
+      <ul class="app_chat-box-messages">
+        <li
+          class="app_chat-box-message"
+          *ngFor="let message of messageArray"
+          [ngClass]="message.user === currentUser?.name ? 'same_user' : ''"
+        >
+          <img
+            *ngIf="message.user !== currentUser?.name"
+            src="https://www.silcube.com/hubfs/avatars/non-avatar.webp"
+            alt=""
+            class="app_chat-box-avt-chatbot"
+          />
+          <p class="app_chat-box-text">
+            {{ message.message }}
+          </p>
+        </li>
+      </ul>
+      <form
+        class="app_chat-box-form"
+        [formGroup]="msgForm"
+        (ngSubmit)="sendMessage()"
+      >
+        <input
+          class="app_chat-box-input"
+          formControlName="text"
+          autocomplete="off"
+        />
+        <div class="app_chat-box-btn">
+          <button class="app_chat-box-send-btn" type="submit">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

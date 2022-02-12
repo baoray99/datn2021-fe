@@ -51,6 +51,13 @@ import { SpinnerComponent } from './layouts/extensions/spinner/spinner.component
 import { LessionPageComponent } from './service-pages/service-enduser/lession-page/lession-page.component';
 registerLocaleData(en);
 
+//Socket io
+// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+// const config: SocketIoConfig = {
+//   url: 'http://localhost:3000',
+//   options: { transports: ['websocket'] },
+// };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -91,6 +98,7 @@ registerLocaleData(en);
     NzPopconfirmModule,
     NzModalModule,
     NzMessageModule,
+    // SocketIoModule.forRoot(config),
   ],
   providers: [API, { provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],
