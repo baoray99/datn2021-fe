@@ -67,6 +67,9 @@ export class UserComponent implements OnInit {
       this.selectedUser = this.userList.find((user) => user.name === name);
       this.roomId = this.selectedUser.roomId[this.currentUser.id];
       this.join(this.currentUser.name, this.roomId);
+      this.chatService.callChatbot().subscribe((res: any) => {
+        console.log(res);
+      });
       this.chatService
         .getMessage()
         .subscribe((data: { user: string; message: string }) => {

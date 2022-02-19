@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
+import { API } from '../../api';
+import { ServicePath } from '../../../common/constant-service-api';
+
+const CALL_CHATBOT = ServicePath.CHAT_SERVICE;
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
   private socket: Socket;
   private url = 'http://localhost:3000';
-  constructor() {
+  constructor(private api: API) {
     this.socket = io(this.url, {
       transports: ['websocket', 'polling', 'flashsocket'],
     });
@@ -15,13 +19,16 @@ export class ChatService {
   joinRoom(data): void {
     this.socket.emit('join', data);
   }
-  leaveRoom(data){
-    this.socket.emit('leave', data)
+  leaveRoom(data) {
+    this.socket.emit('leave', data);
   }
   sendMessage(data): void {
     this.socket.emit('message', data);
   }
-
+  callChatbot() {
+    const url = CALL_CHATBOT;
+    return this.api.get(url);
+  }
   getMessage(): Observable<any> {
     return new Observable<{ user: string; message: string }>((observer) => {
       this.socket.on('new message', (data) => {

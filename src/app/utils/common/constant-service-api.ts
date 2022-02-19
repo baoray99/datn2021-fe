@@ -4,4 +4,5 @@ export const ServicePath = {
   LESSION_SERVICE: 'lessions',
   ROLE_SERVICE: 'roles',
   COMMENT_SERVICE: 'comments',
+  CHAT_SERVICE:'chat'
 };
