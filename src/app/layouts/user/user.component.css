@@ -92,6 +92,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 4px;
+  max-width: 80%;
 }
 .app_chat-box-message.same_user {
   margin-left: auto;

@@ -40,9 +40,15 @@
             alt=""
             class="app_chat-box-avt-chatbot"
           />
-          <p class="app_chat-box-text">
-            {{ message.message }}
-          </p>
+          <p class="app_chat-box-text">{{ message.message }}</p>
+          <!-- <ng-container *ngIf="courseShow.length > 0; else elseNoCourses">
+            <p class="app_chat-box-text" *ngFor="let course of courseShow">
+              {{ course.name }}
+            </p>
+          </ng-container>
+          <ng-template #elseNoCourses>
+            <p class="app_chat-box-text">{{ message.message }}</p>
+          </ng-template> -->
         </li>
       </ul>
       <form

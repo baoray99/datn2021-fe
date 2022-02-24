@@ -3,7 +3,17 @@ import { AuthService } from '../../utils/services/aas-network/auth/auth.service'
 import { User } from '../../utils/models/user/user.model';
 import { ChatService } from 'src/app/utils/services/aas-network/chatservice/chatservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+class CourseMsg {
+  name: string;
+  image: string;
+  slug: string;
+  constructor(d = null) {
+    d = d || null;
+    this.name = d.name || '';
+    this.image = d.image || '';
+    this.slug = d.slug || '';
+  }
+}
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -11,15 +21,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class UserComponent implements OnInit {
   user: User = null;
-  msg = 'First Protocol';
   msgForm!: FormGroup;
   isOpen: boolean = false;
+  isCourse: boolean = false;
   public roomId: string;
   public messageText: string;
-  public messageArray: { user: string; message: string }[] = [];
+  public messageArray = [];
   public currentUser;
   public selectedUser;
-
+  public courseShow: CourseMsg[] = [];
   public userList = [
     {
       id: 1,
@@ -59,6 +69,14 @@ export class UserComponent implements OnInit {
       });
     }
   }
+  IsJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
   toggleBoxChat(name: string) {
     this.isOpen = !this.isOpen;
     const boxChat = document.querySelector<HTMLElement>('.app_chat-box');
@@ -67,25 +85,21 @@ export class UserComponent implements OnInit {
       this.selectedUser = this.userList.find((user) => user.name === name);
       this.roomId = this.selectedUser.roomId[this.currentUser.id];
       this.join(this.currentUser.name, this.roomId);
-      this.chatService.callChatbot().subscribe((res: any) => {
-        console.log(res);
-      });
+      this.chatService.callChatbot().subscribe();
       this.chatService
         .getMessage()
         .subscribe((data: { user: string; message: string }) => {
-          console.log(data);
-          this.messageArray.push(data);
-          if (this.roomId) {
-            const msgInput = document.querySelector<HTMLInputElement>(
-              '.app_chat-box-input'
-            );
-            const listMsg = document.querySelector<HTMLElement>(
-              '.app_chat-box-messages'
-            );
-            listMsg.scrollTo(0, listMsg.scrollHeight);
-            msgInput.value = '';
-            this.msgForm.setErrors({ invalid: true });
-          }
+          // if (data.user === 'chatbot' && this.IsJsonString(data.message)) {
+          //   console.log('enter func');
+          //   this.courseShow = [];
+          //   this.insertMsg(data);
+          //   JSON.parse(data.message).forEach((course) => {
+          //     this.courseShow.push(new CourseMsg(course));
+          //   });
+          // } else {
+          //   this.courseShow = [];
+          this.insertMsg(data);
+          // }
         });
     } else {
       this.leave(this.currentUser.name, this.roomId);
@@ -98,12 +112,17 @@ export class UserComponent implements OnInit {
     this.chatService.leaveRoom({ user: username, room: roomId });
   }
   sendMessage(): void {
+    const msgInput = document.querySelector<HTMLInputElement>(
+      '.app_chat-box-input'
+    );
     if (this.msgForm.valid) {
       this.chatService.sendMessage({
         user: this.currentUser.name,
         room: this.roomId,
         message: this.msgForm.value.text,
       });
+      msgInput.value = '';
+      this.msgForm.setErrors({ invalid: true });
     } else {
       Object.values(this.msgForm.controls).forEach((control) => {
         if (control.invalid) {
@@ -117,5 +136,14 @@ export class UserComponent implements OnInit {
     this.currentUser = this.userList.find((user) => user.name === name);
     this.userList = this.userList.filter((user) => user.name !== name);
     console.log(this.currentUser);
+  }
+  insertMsg(data) {
+    this.messageArray.push(data);
+    if (this.roomId) {
+      const listMsg = document.querySelector<HTMLElement>(
+        '.app_chat-box-messages'
+      );
+      listMsg.scrollTo(0, listMsg.scrollHeight);
+    }
   }
 }
