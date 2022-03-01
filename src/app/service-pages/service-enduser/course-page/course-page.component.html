@@ -1,43 +1,95 @@
-<app-spinner></app-spinner>
-<div class="courses-manager">
-  <div class="courses-manager__header">
-    <h1 class="courses-manager__heading">Tất cả khóa học</h1>
-  </div>
-  <ng-container *ngIf="courseList.length > 0; else elseNoCourseTemplate">
-    <div class="course-manager__course-list">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col col-lg-3" *ngFor="let course of courseList">
-            <div
-              class="course-manager__course-item"
-              routerLink="/courses/{{ course.slug }}"
-              style="
+<div class="course-container">
+  <div class="courses-manager" *hasPermission="'student'; user: user">
+    <div class="courses-manager__header">
+      <h1 class="courses-manager__heading">Khóa đang học</h1>
+    </div>
+    <ng-container
+      *ngIf="courseList.length > 0; else elseNoRegisterdCourseTemplate"
+    >
+      <div class="course-manager__course-list">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col col-lg-3" *ngFor="let course of registeredCourses">
+              <div
+                class="course-manager__course-item"
+                [routerLink]="['/learn', course.slug]"
+                style="
               background-image: url({{course?.image}});
             "
-            ></div>
-            <div class="course-manager__course-detail">
-              <a
-                class="course-manager__course-name"
-                routerLink="/courses/{{ course.slug }}"
-              >
-                {{ course.name }}
-              </a>
-              <p class="course-manager__course-members">
+              ></div>
+              <div class="course-manager__course-detail">
+                <a
+                  class="course-manager__course-name"
+                  [routerLink]="['/learn', course.slug]"
+                >
+                  {{ course.name }}
+                </a>
+                <!-- <p class="course-manager__course-members">
                 <i class="fas fa-users course-manager__course-members-icon"></i>
                 {{ course.totalMember }}
-              </p>
+              </p> -->
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </ng-container>
+    <ng-template #elseNoRegisterdCourseTemplate>
+      <div class="course-manager__no-courses">
+        <i
+          class="fas fa-exclamation-triangle course-manager__no-courses-icon"
+        ></i>
+        <h2 class="course-manager__no-courses-text">
+          Bạn chưa đăng ký khóa học nào
+        </h2>
+      </div>
+    </ng-template>
+  </div>
+  <div class="courses-manager">
+    <div class="courses-manager__header">
+      <h1 class="courses-manager__heading">Tất cả khóa học</h1>
     </div>
-  </ng-container>
-  <ng-template #elseNoCourseTemplate>
-    <div class="course-manager__no-courses">
-      <i
-        class="fas fa-exclamation-triangle course-manager__no-courses-icon"
-      ></i>
-      <h2 class="course-manager__no-courses-text">Bạn chưa dạy khóa học nào</h2>
-    </div>
-  </ng-template>
+
+    <ng-container *ngIf="courseList.length > 0; else elseNoCourseTemplate">
+      <div class="course-manager__course-list">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col col-lg-3" *ngFor="let course of courseList">
+              <div
+                class="course-manager__course-item"
+                [routerLink]="['/courses', course.slug]"
+                style="
+                background-image: url({{course?.image}});
+              "
+              ></div>
+              <div class="course-manager__course-detail">
+                <a
+                  class="course-manager__course-name"
+                  [routerLink]="['/courses', course.slug]"
+                >
+                  {{ course.name }}
+                </a>
+                <p class="course-manager__course-members">
+                  <i
+                    class="fas fa-users course-manager__course-members-icon"
+                  ></i>
+                  {{ course.totalMember }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #elseNoCourseTemplate>
+      <div class="course-manager__no-courses">
+        <i
+          class="fas fa-exclamation-triangle course-manager__no-courses-icon"
+        ></i>
+        <h2 class="course-manager__no-courses-text">
+          Hiện tại chưa có khóa học nào
+        </h2>
+      </div>
+    </ng-template>
+  </div>
 </div>

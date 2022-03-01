@@ -38,6 +38,7 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
   currentLession: Lession = null;
   currentVideo: string = '';
   formComment: FormGroup;
+  relateCourses = [];
   ngOnInit(): void {
     this.slug = this.route.snapshot.paramMap.get('slug');
     this.idLession = this.route.snapshot.queryParamMap.get('_id');
@@ -79,6 +80,20 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
+  getRelateCourse(courseName: string) {
+    this.courseService
+      .getRelateCourses({
+        courseName: courseName,
+      })
+      .subscribe((res: any) => {
+        if (res && res instanceof Array) {
+          this.relateCourses = [];
+          res.forEach((item) => {
+            this.relateCourses.push(item);
+          });
+        }
+      });
   }
   pushComment() {
     if (this.formComment.valid) {
@@ -166,6 +181,7 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
           queryParams: { _id: this.course.lessions[0]._id },
         });
         this.getLessionById(this.idLession);
+        this.getRelateCourse(this.course.name);
       },
       (error) => {
         console.log(error);

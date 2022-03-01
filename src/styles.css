@@ -562,6 +562,8 @@ ul {
   flex-shrink: 0;
   width: 320px;
   margin-right: 15px;
+  display: flex;
+  flex-direction: column;
 }
 .scroll__slide-item:nth-last-child(1) {
   margin-right: 0;
@@ -576,6 +578,10 @@ ul {
 }
 .scroll__slide-detail {
   padding: 8px 14px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .scroll__slide-name {
   text-decoration: none;
@@ -584,6 +590,7 @@ ul {
   color: var(--text-color);
 }
 .scroll__slide-members {
+  margin-top: auto;
 }
 .scroll__slide-members-icon {
   color: var(--icon-color);

@@ -14,7 +14,6 @@
             <span class="icon"><i class="fas fa-arrow-left"></i></span
             ><span>Nội dung học</span>
           </button>
-          
         </div>
         <div class="relate-content">
           <div class="tabs">
@@ -35,7 +34,7 @@
                 <div class="row">
                   <div class="col col-lg-9">
                     <h3 class="comment-tab__total">
-                      {{ currentLession.comments.length }} hỏi đáp
+                      {{ currentLession?.comments.length }} hỏi đáp
                     </h3>
                     <div class="comment-tab__input-box">
                       <img
@@ -62,10 +61,7 @@
                           >
                             Hủy
                           </button>
-                          <button
-                            type="submit"
-                            class="comment-tab__btn-submit"
-                          >
+                          <button type="submit" class="comment-tab__btn-submit">
                             Bình luận
                           </button>
                         </div>
@@ -74,7 +70,7 @@
                     <ul class="comment-tab__list">
                       <li
                         class="comment-tab__item"
-                        *ngFor="let comment of currentLession.comments"
+                        *ngFor="let comment of currentLession?.comments"
                       >
                         <img
                           class="comment-tab__avt"
@@ -97,7 +93,22 @@
               </div>
             </div>
             <div class="tab-pane"></div>
-            <div class="tab-pane"></div>
+            <div class="tab-pane relate-courses">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col col-12">
+                    <ul class="list-relate-courses">
+                      <li
+                        class="item-relate-course"
+                        *ngFor="let course of relateCourses"
+                      >
+                        {{ course.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -25,9 +25,9 @@ export class ChatService {
   sendMessage(data): void {
     this.socket.emit('message', data);
   }
-  callChatbot() {
+  callChatbot(data) {
     const url = CALL_CHATBOT;
-    return this.api.get(url);
+    return this.api.post(url, data);
   }
   getMessage(): Observable<any> {
     return new Observable<{ user: string; message: string }>((observer) => {

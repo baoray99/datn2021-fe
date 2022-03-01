@@ -3,49 +3,20 @@ import { AuthService } from '../../utils/services/aas-network/auth/auth.service'
 import { User } from '../../utils/models/user/user.model';
 import { ChatService } from 'src/app/utils/services/aas-network/chatservice/chatservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-class CourseMsg {
-  name: string;
-  image: string;
-  slug: string;
-  constructor(d = null) {
-    d = d || null;
-    this.name = d.name || '';
-    this.image = d.image || '';
-    this.slug = d.slug || '';
-  }
-}
+import { ViewEncapsulation } from '@angular/core';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class UserComponent implements OnInit {
   user: User = null;
   msgForm!: FormGroup;
   isOpen: boolean = false;
   isCourse: boolean = false;
-  public roomId: string;
-  public messageText: string;
-  public messageArray = [];
-  public currentUser;
-  public selectedUser;
-  public courseShow: CourseMsg[] = [];
-  public userList = [
-    {
-      id: 1,
-      name: 'Student 1',
-      roomId: {
-        2: 'room-1',
-      },
-    },
-    {
-      id: 2,
-      name: 'Teacher 1',
-      roomId: {
-        1: 'room-1',
-      },
-    },
-  ];
+  public roomId: string = 'room-';
   constructor(
     private authService: AuthService,
     private chatService: ChatService,
@@ -64,8 +35,8 @@ export class UserComponent implements OnInit {
         this.user = null;
         if (res && res instanceof Object) {
           this.user = res;
+          this.roomId += Math.floor(Math.random() * 100);
         }
-        this.login(this.user.name);
       });
     }
   }
@@ -82,27 +53,20 @@ export class UserComponent implements OnInit {
     const boxChat = document.querySelector<HTMLElement>('.app_chat-box');
     boxChat.classList.toggle('active');
     if (this.isOpen) {
-      this.selectedUser = this.userList.find((user) => user.name === name);
-      this.roomId = this.selectedUser.roomId[this.currentUser.id];
-      this.join(this.currentUser.name, this.roomId);
-      this.chatService.callChatbot().subscribe();
+      this.join(name, this.roomId);
+      this.chatService.callChatbot({ roomId: this.roomId }).subscribe();
       this.chatService
         .getMessage()
         .subscribe((data: { user: string; message: string }) => {
-          // if (data.user === 'chatbot' && this.IsJsonString(data.message)) {
-          //   console.log('enter func');
-          //   this.courseShow = [];
-          //   this.insertMsg(data);
-          //   JSON.parse(data.message).forEach((course) => {
-          //     this.courseShow.push(new CourseMsg(course));
-          //   });
-          // } else {
-          //   this.courseShow = [];
           this.insertMsg(data);
-          // }
         });
     } else {
-      this.leave(this.currentUser.name, this.roomId);
+      this.chatService.sendMessage({
+        user: this.user.name,
+        room: this.roomId,
+        message: 'Bye',
+      });
+      this.leave(name, this.roomId);
     }
   }
   join(username: string, roomId: string): void {
@@ -117,7 +81,7 @@ export class UserComponent implements OnInit {
     );
     if (this.msgForm.valid) {
       this.chatService.sendMessage({
-        user: this.currentUser.name,
+        user: this.user.name,
         room: this.roomId,
         message: this.msgForm.value.text,
       });
@@ -132,17 +96,40 @@ export class UserComponent implements OnInit {
       });
     }
   }
-  login(name: string): void {
-    this.currentUser = this.userList.find((user) => user.name === name);
-    this.userList = this.userList.filter((user) => user.name !== name);
-    console.log(this.currentUser);
-  }
   insertMsg(data) {
-    this.messageArray.push(data);
     if (this.roomId) {
       const listMsg = document.querySelector<HTMLElement>(
         '.app_chat-box-messages'
       );
+      const item = document.createElement('li');
+      item.classList.add('app_chat-box-message');
+      if (this.IsJsonString(data.message)) {
+        item.innerHTML = `
+        <img
+        src="https://www.silcube.com/hubfs/avatars/non-avatar.webp"
+        alt=""
+        class="app_chat-box-avt-chatbot"
+      />`;
+        JSON.parse(data.message).forEach((course) => {
+          const textCourse = document.createElement('a');
+          textCourse.setAttribute('href', `/courses/${course.slug}`);
+          textCourse.classList.add('app_chat-box-text');
+          textCourse.textContent = course.name;
+          item.appendChild(textCourse);
+        });
+      } else if (data.user === this.user.name) {
+        item.classList.add('same_user');
+        item.innerHTML = `<p class="app_chat-box-text">${data.message}</p>`;
+      } else {
+        item.innerHTML = `
+        <img
+        src="https://www.silcube.com/hubfs/avatars/non-avatar.webp"
+        alt=""
+        class="app_chat-box-avt-chatbot"
+      />
+      <p class="app_chat-box-text">${data.message}</p>`;
+      }
+      listMsg.appendChild(item);
       listMsg.scrollTo(0, listMsg.scrollHeight);
     }
   }

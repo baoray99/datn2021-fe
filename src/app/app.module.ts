@@ -49,6 +49,7 @@ import { LessionManagerPageComponent } from './service-pages/service-enduser/les
 import { CoursePageComponent } from './service-pages/service-enduser/course-page/course-page.component';
 import { SpinnerComponent } from './layouts/extensions/spinner/spinner.component';
 import { LessionPageComponent } from './service-pages/service-enduser/lession-page/lession-page.component';
+import { EditMePageComponent } from './service-pages/service-enduser/edit-me-page/edit-me-page.component';
 registerLocaleData(en);
 
 //Socket io
@@ -77,6 +78,7 @@ registerLocaleData(en);
     CoursePageComponent,
     SpinnerComponent,
     LessionPageComponent,
+    EditMePageComponent,
   ],
   imports: [
     BrowserModule,

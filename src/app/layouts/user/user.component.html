@@ -11,13 +11,9 @@
   <div class="app__footer">
     <app-footer></app-footer>
   </div>
-  <div class="app_chat-container">
-    <button
-      *ngFor="let item of userList"
-      class="app_chat-btn"
-      (click)="toggleBoxChat(item.name)"
-    >
-      {{ item.name }}
+  <div class="app_chat-container" *hasPermission="'student'; user: user">
+    <button class="app_chat-btn" (click)="toggleBoxChat(user.name)">
+      Chatbot
     </button>
     <div class="app_chat-box">
       <div class="app_chat-box-header">
@@ -29,27 +25,35 @@
         <span>Chatbot</span>
       </div>
       <ul class="app_chat-box-messages">
-        <li
+        <!-- <li
           class="app_chat-box-message"
           *ngFor="let message of messageArray"
-          [ngClass]="message.user === currentUser?.name ? 'same_user' : ''"
+          [ngClass]="message.user === user?.name ? 'same_user' : ''"
         >
           <img
-            *ngIf="message.user !== currentUser?.name"
+            *ngIf="message.user !== user?.name"
             src="https://www.silcube.com/hubfs/avatars/non-avatar.webp"
             alt=""
             class="app_chat-box-avt-chatbot"
           />
-          <p class="app_chat-box-text">{{ message.message }}</p>
-          <!-- <ng-container *ngIf="courseShow.length > 0; else elseNoCourses">
+          <ng-container
+            *ngIf="IsJsonString(message.message); else elseNoCourse"
+          >
+            <p class="app_chat-box-text" ng></p>
+          </ng-container>
+          <ng-template #elseNoCourse>
+            <p class="app_chat-box-text">{{ message.message }}</p>
+          </ng-template>
+
+          <ng-container *ngIf="courseShow.length > 0; else elseNoCourses">
             <p class="app_chat-box-text" *ngFor="let course of courseShow">
               {{ course.name }}
             </p>
           </ng-container>
           <ng-template #elseNoCourses>
             <p class="app_chat-box-text">{{ message.message }}</p>
-          </ng-template> -->
-        </li>
+          </ng-template>
+        </li> -->
       </ul>
       <form
         class="app_chat-box-form"

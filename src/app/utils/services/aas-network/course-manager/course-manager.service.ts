@@ -4,13 +4,14 @@ import { API } from '../../api';
 
 const COURSE_LIST = ServicePath.COURSE_SERVICE;
 const POPULAR_COURSE = ServicePath.COURSE_SERVICE + '/popular';
-const REGISTERED_COURSE= ServicePath.COURSE_SERVICE
+const REGISTERED_COURSE = ServicePath.COURSE_SERVICE;
 const COURSE_BY_SLUG = ServicePath.COURSE_SERVICE;
 const COURSE_BY_TEACHER = ServicePath.COURSE_SERVICE;
 const COURSE_BY_ID = ServicePath.COURSE_SERVICE + '/id';
 const COURSE_ADD = ServicePath.COURSE_SERVICE;
 const COURSE_UPDATE = ServicePath.COURSE_SERVICE;
 const COURSE_DELETE = ServicePath.COURSE_SERVICE;
+const RELATE_COURSES = ServicePath.COURSE_SERVICE + '/recommend';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,10 @@ export class CourseManagerService {
   getCourseByTeacherId(id: string) {
     const url = COURSE_BY_TEACHER + `/teacher/${id}`;
     return this.api.get(url);
+  }
+  getRelateCourses(data) {
+    const url = RELATE_COURSES;
+    return this.api.post(url, data);
   }
   //POST course
   createCourse(data) {

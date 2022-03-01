@@ -1,4 +1,7 @@
 @import "../../../../themes/_theme-variables.css";
+.course-container{
+  padding: 0px 44px 74px;
+}
 .courses-manager {
   height: auto;
 }

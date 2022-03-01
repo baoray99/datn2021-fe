@@ -17,6 +17,7 @@ const USER_DETAIL = ServicePath.AUTH_SERVICE;
 const USER_ME = ServicePath.AUTH_SERVICE + '/me';
 const USER_DELETE = ServicePath.AUTH_SERVICE;
 const UNREGISTER_COURSE = ServicePath.AUTH_SERVICE + '/unregister-course';
+const ALL_COURSE_LOGINED = ServicePath.AUTH_SERVICE + '/all-course-logined';
 
 @Injectable({
   providedIn: 'root',
@@ -80,5 +81,9 @@ export class AuthService {
   getPopularCourseWithLogin(registerCourse: any) {
     const url = UNREGISTER_COURSE;
     return this.api.post(url, registerCourse);
+  }
+  getAllCourseWithLogin(registerdCourse: any) {
+    const url = ALL_COURSE_LOGINED;
+    return this.api.post(url, registerdCourse);
   }
 }
