@@ -93,8 +93,8 @@ export class HomePageComponent implements OnInit, AfterViewInit {
   getTeachingCourse() {
     this.authService.getTeachingCourse().subscribe((res: any) => {
       this.courseList = [];
-      if (res && res.teachingCourse instanceof Array) {
-        res.teachingCourse.forEach((item) => {
+      if (res && res.teaching_courses instanceof Array) {
+        res.teaching_courses.forEach((item) => {
           this.courseList.push(new Course(item));
         });
       }
@@ -103,12 +103,20 @@ export class HomePageComponent implements OnInit, AfterViewInit {
   getRegisteredCourse() {
     this.authService.getRegisteredCourses().subscribe((res: any) => {
       this.registeredCourses = [];
-      if (res && res.registeredCourse instanceof Array) {
-        res.registeredCourse.forEach((item) => {
+      if (res && res.registered_courses instanceof Array) {
+        res.registered_courses.forEach((item) => {
           this.registeredCourses.push(new Course(item));
         });
-        this.getPopularCourseWithLogin(this.registeredCourses);
-      }      
+        console.log(this.registeredCourses);
+
+        if (this.registeredCourses.length > 0) {
+          this.getPopularCourseWithLogin({
+            registered_courses: this.registeredCourses,
+          });
+        } else {
+          this.getPopularCourse();
+        }
+      }
     });
   }
   getPopularCourse() {
@@ -127,30 +135,31 @@ export class HomePageComponent implements OnInit, AfterViewInit {
     );
   }
   getPopularCourseWithLogin(registeredCourse: any) {
-    const body = {
-      registeredCourses: registeredCourse,
-    };
-    this.authService.getPopularCourseWithLogin(body).subscribe(
-      (res: any) => {
-        this.popularCourses = [];
-        if (res && res instanceof Array) {
-          res.forEach((item) => {
-            this.popularCourses.push(new Course(item));
-          });
+    this.authService
+      .getPopularCourseWithLogin({
+        registered_courses: registeredCourse,
+      })
+      .subscribe(
+        (res: any) => {
+          this.popularCourses = [];
+          if (res && res instanceof Array) {
+            res.forEach((item) => {
+              this.popularCourses.push(new Course(item));
+            });
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      );
   }
-  checkRegisterCourse(slug: string) {
-    if (this.user && this.user instanceof Object) {
-      this.user.registeredCourse.forEach((item) => {
-        if (item.slug === slug) {
-          this.isRegistered = true;
-        } else this.isRegistered = false;
-      });
-    }
-  }
+  // checkRegisterCourse(slug: string) {
+  //   if (this.user && this.user instanceof Object) {
+  //     this.user.registered_courses.forEach((item) => {
+  //       if (item.slug === slug) {
+  //         this.isRegistered = true;
+  //       } else this.isRegistered = false;
+  //     });
+  //   }
+  // }
 }

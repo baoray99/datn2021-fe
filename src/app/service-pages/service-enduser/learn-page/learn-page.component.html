@@ -10,7 +10,7 @@
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
           ></iframe>
-          <button class="view-course__expand-btn" (click)="expandLession()">
+          <button class="view-course__expand-btn" (click)="expandLesson()">
             <span class="icon"><i class="fas fa-arrow-left"></i></span
             ><span>Nội dung học</span>
           </button>
@@ -34,7 +34,7 @@
                 <div class="row">
                   <div class="col col-lg-9">
                     <h3 class="comment-tab__total">
-                      {{ currentLession?.comments.length }} hỏi đáp
+                      {{ currentLesson?.comments.length }} hỏi đáp
                     </h3>
                     <div class="comment-tab__input-box">
                       <img
@@ -70,7 +70,7 @@
                     <ul class="comment-tab__list">
                       <li
                         class="comment-tab__item"
-                        *ngFor="let comment of currentLession?.comments"
+                        *ngFor="let comment of currentLesson?.comments"
                       >
                         <img
                           class="comment-tab__avt"
@@ -94,7 +94,36 @@
             </div>
             <div class="tab-pane"></div>
             <div class="tab-pane relate-courses">
-              <div class="container-fluid">
+              <div class="course-manager__course-list">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col col-lg-3" *ngFor="let course of relateCourses">
+                      <div
+                        class="course-manager__course-item"
+                        [routerLink]="['/courses', course.slug]"
+                        style="
+                        background-image: url({{course?.image}});
+                      "
+                      ></div>
+                      <div class="course-manager__course-detail">
+                        <a
+                          class="course-manager__course-name"
+                          [routerLink]="['/courses', course.slug]"
+                        >
+                          {{ course.name }}
+                        </a>
+                        <!-- <p class="course-manager__course-members">
+                          <i
+                            class="fas fa-users course-manager__course-members-icon"
+                          ></i>
+                          {{ course.total_member }}
+                        </p> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="container-fluid">
                 <div class="row">
                   <div class="col col-12">
                     <ul class="list-relate-courses">
@@ -107,34 +136,34 @@
                     </ul>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-3 lessions">
-        <ul class="list-lession">
-          <div class="list-lession__heading">
-            <div class="list-lession__description">
-              <h3 class="list-lession__name">{{ course?.name }}</h3>
-              <p class="list-lession__progress">
-                Hoàn thành <strong>1/{{ lessionList.length }}</strong> bài học
-                <strong>(100%)</strong>
-              </p>
+      <div class="col-lg-3 lessons">
+        <ul class="list-lesson">
+          <div class="list-lesson__heading">
+            <div class="list-lesson__description">
+              <h3 class="list-lesson__name">{{ course?.name }}</h3>
+              <!-- <p class="list-lesson__progress">
+                Bạn đang học bài
+                <strong>{{}}/{{ lessonList.length }}</strong> bài học
+              </p> -->
             </div>
-            <div class="list-lession__btn-collapse" (click)="collapseLession()">
-              <i class="fas fa-arrow-right list-lession__collapse-icon"></i>
+            <div class="list-lesson__btn-collapse" (click)="collapseLesson()">
+              <i class="fas fa-arrow-right list-lesson__collapse-icon"></i>
             </div>
           </div>
           <li
-            class="list-lession-item"
-            *ngFor="let lession of lessionList; index as idx; first as isFirst"
+            class="list-lesson-item"
+            *ngFor="let lesson of lessonList; index as idx; first as isFirst"
             [ngClass]="isFirst ? 'active' : ''"
             routerLink="/learn/{{ course.slug }}"
-            [queryParams]="{ _id: lession._id }"
-            (click)="changeCurrentVideo()"
+            [queryParams]="{ _id: lesson._id }"
+            (click)="changeCurrentVideo(lesson._id)"
           >
-            <span>{{ idx + 1 }}. </span>{{ lession?.name }}
+            <span>{{ idx + 1 }}. </span>{{ lesson?.name }}
           </li>
         </ul>
       </div>

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoadingInterceptor } from './utils/interceptors/loading.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,10 +46,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
-import { LessionManagerPageComponent } from './service-pages/service-enduser/lession-manager-page/lession-manager-page.component';
+import { LessonManagerPageComponent } from './service-pages/service-enduser/lesson-manager-page/lesson-manager-page.component';
 import { CoursePageComponent } from './service-pages/service-enduser/course-page/course-page.component';
 import { SpinnerComponent } from './layouts/extensions/spinner/spinner.component';
-import { LessionPageComponent } from './service-pages/service-enduser/lession-page/lession-page.component';
+import { LessonPageComponent } from './service-pages/service-enduser/lesson-page/lesson-page.component';
 import { EditMePageComponent } from './service-pages/service-enduser/edit-me-page/edit-me-page.component';
 registerLocaleData(en);
 
@@ -73,11 +74,11 @@ registerLocaleData(en);
     AdminComponent,
     HomePageComponent,
     CourseManagerPageComponent,
-    LessionManagerPageComponent,
+    LessonManagerPageComponent,
     HaspermissionDirective,
     CoursePageComponent,
     SpinnerComponent,
-    LessionPageComponent,
+    LessonPageComponent,
     EditMePageComponent,
   ],
   imports: [
@@ -102,7 +103,16 @@ registerLocaleData(en);
     NzMessageModule,
     // SocketIoModule.forRoot(config),
   ],
-  providers: [API, { provide: NZ_I18N, useValue: en_US }],
+  providers: [
+    API,
+    { provide: NZ_I18N, useValue: en_US },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
+  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

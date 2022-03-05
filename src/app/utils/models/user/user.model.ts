@@ -10,8 +10,8 @@ export class User {
   facebook: string = '';
   instagram: string = '';
   youtube: string = '';
-  registeredCourse: Array<Course> = [];
-  teachingCourse: Array<Course> = [];
+  registered_courses: Array<Course> = [];
+  teaching_courses: Array<Course> = [];
   email: string = '';
   role: any;
 
@@ -28,8 +28,8 @@ export class User {
     this.instagram = d.instagram || '';
     this.youtube = d.youtube || '';
     this.email = d.email || '';
-    this.registeredCourse = d.registeredCourse || [];
-    this.teachingCourse = d.teachingCourse || [];
+    this.registered_courses = d.registered_courses || [];
+    this.teaching_courses = d.teaching_courses || [];
     this.role = d.role || null;
   }
 }

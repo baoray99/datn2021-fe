@@ -1,27 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd';
 import { Course } from 'src/app/utils/models/course/course.model';
-import { Lession } from 'src/app/utils/models/lession/lession.model';
+import { Lesson } from 'src/app/utils/models/lesson/lesson.model';
 import { AuthService } from 'src/app/utils/services/aas-network/auth/auth.service';
 import { CourseManagerService } from 'src/app/utils/services/aas-network/course-manager/course-manager.service';
-import { LessionManagerService } from 'src/app/utils/services/aas-network/lession-manager/lession-manager.service';
+import { LessonManagerService } from 'src/app/utils/services/aas-network/lesson-manager/lesson-manager.service';
 
 @Component({
-  selector: 'app-lession-page',
-  templateUrl: './lession-page.component.html',
-  styleUrls: ['./lession-page.component.css'],
+  selector: 'app-lesson-page',
+  templateUrl: './lesson-page.component.html',
+  styleUrls: ['./lesson-page.component.css'],
 })
-export class LessionPageComponent implements OnInit {
+export class LessonPageComponent implements OnInit {
   slug: string = '';
   course: Course = null;
-  lessionList: Lession[] = [];
+  lessonList: Lesson[] = [];
   userId: string = '';
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private courseService: CourseManagerService,
-    private lessionService: LessionManagerService,
-    private authService: AuthService
+    private lessonService: LessonManagerService,
+    private authService: AuthService,
+    private message: NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -42,10 +44,10 @@ export class LessionPageComponent implements OnInit {
     this.courseService.getCourseBySlug(slug).subscribe(
       (res: any) => {
         this.course = null;
-        if (res && res instanceof Object && res.lessions instanceof Array) {
+        if (res && res instanceof Object && res.lessons instanceof Array) {
           this.course = res;
-          res.lessions.forEach((item) => {
-            this.lessionList.push(new Lession(item));
+          res.lessons.forEach((item) => {
+            this.lessonList.push(new Lesson(item));
           });
         }
       },
@@ -58,12 +60,12 @@ export class LessionPageComponent implements OnInit {
     if (localStorage.getItem('token')) {
       this.authService
         .addRegisteredCourse({
-          courseId: courseId,
-          userId: this.userId,
+          course_id: courseId,
+          user_id: this.userId,
         })
         .subscribe(
           (res: any) => {
-            console.log('dang ky khoa hoc thanh cong');
+            this.message.success("Đăng ký khóa học thành công!")
             this.router.navigate([`/learn/${this.slug}`]);
           },
           (error) => {

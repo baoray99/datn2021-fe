@@ -1,15 +1,15 @@
-export class Lession {
+export class Lesson {
   _id: string = '';
-  belongTo: any = null;
+  course_id: any = null;
   name: string = '';
   comments: Comment[] = [];
-  idVideo: string = '';
+  video_id: string = '';
   constructor(d = null) {
     d = d || null;
     this._id = d._id || '';
-    this.belongTo = d.belongTo;
+    this.course_id = d.course_id;
     this.name = d.name || '';
     this.comments = d.comments || [];
-    this.idVideo = d.idVideo || '';
+    this.video_id = d.video_id || '';
   }
 }

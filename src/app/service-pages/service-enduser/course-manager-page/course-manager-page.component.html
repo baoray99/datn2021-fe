@@ -30,7 +30,7 @@
                 </div>
                 <div
                   class="course-manager__course-control-btn"
-                  (click)="$event.stopPropagation()"
+                  (click)="$event.stopPropagation(); showDeleteConfirm(course._id)"
                 >
                   <i
                     class="fas fas fa-times course-manager__course-control-icon"
@@ -48,7 +48,7 @@
               </a>
               <p class="course-manager__course-members">
                 <i class="fas fa-users course-manager__course-members-icon"></i>
-                {{ course.totalMember }}
+                {{ course.total_member }}
               </p>
             </div>
           </div>

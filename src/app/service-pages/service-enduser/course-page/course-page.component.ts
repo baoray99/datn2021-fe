@@ -25,26 +25,8 @@ export class CoursePageComponent implements OnInit {
     } else {
       this.getAllCourse();
     }
-    // this.getAllCourse();
   }
-  // getAllCourse() {
-  //   const body = {
-  //     registeredCourses: this.registeredCourses,
-  //   };
-  //   this.authService.getAllCourseWithLogin(body).subscribe(
-  //     (res: any) => {
-  //       this.courseList = [];
-  //       if (res && res instanceof Array) {
-  //         res.forEach((item) => {
-  //           this.courseList.push(new Course(item));
-  //         });
-  //       }
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
+
   getMe() {
     if (window.localStorage.getItem('token')) {
       this.authService.getMe().subscribe((res: any) => {
@@ -60,8 +42,8 @@ export class CoursePageComponent implements OnInit {
     this.authService.getRegisteredCourses().subscribe(
       (res: any) => {
         this.registeredCourses = [];
-        if (res && res.registeredCourse instanceof Array) {
-          res.registeredCourse.forEach((item) => {
+        if (res && res.registered_courses instanceof Array) {
+          res.registered_courses.forEach((item) => {
             this.registeredCourses.push(new Course(item));
           });
           this.getAllCourseWithLogin(this.registeredCourses);
@@ -74,7 +56,7 @@ export class CoursePageComponent implements OnInit {
   }
   getAllCourseWithLogin(registeredCourse: any) {
     const body = {
-      registeredCourses: registeredCourse,
+      registered_courses: registeredCourse,
     };
     this.authService.getAllCourseWithLogin(body).subscribe(
       (res: any) => {

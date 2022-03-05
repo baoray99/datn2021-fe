@@ -1,10 +1,11 @@
+<app-spinner></app-spinner>
 <div class="course-container">
-  <div class="courses-manager" *hasPermission="'student'; user: user">
+  <div class="courses-manager course-section" *hasPermission="'student'; user: user">
     <div class="courses-manager__header">
       <h1 class="courses-manager__heading">Khóa đang học</h1>
     </div>
     <ng-container
-      *ngIf="courseList.length > 0; else elseNoRegisterdCourseTemplate"
+      *ngIf="registeredCourses.length > 0; else elseNoRegisterdCourseTemplate"
     >
       <div class="course-manager__course-list">
         <div class="container-fluid">
@@ -24,10 +25,6 @@
                 >
                   {{ course.name }}
                 </a>
-                <!-- <p class="course-manager__course-members">
-                <i class="fas fa-users course-manager__course-members-icon"></i>
-                {{ course.totalMember }}
-              </p> -->
               </div>
             </div>
           </div>
@@ -45,11 +42,10 @@
       </div>
     </ng-template>
   </div>
-  <div class="courses-manager">
+  <div class="courses-manager course-section">
     <div class="courses-manager__header">
       <h1 class="courses-manager__heading">Tất cả khóa học</h1>
     </div>
-
     <ng-container *ngIf="courseList.length > 0; else elseNoCourseTemplate">
       <div class="course-manager__course-list">
         <div class="container-fluid">
@@ -73,7 +69,7 @@
                   <i
                     class="fas fa-users course-manager__course-members-icon"
                   ></i>
-                  {{ course.totalMember }}
+                  {{ course.total_member }}
                 </p>
               </div>
             </div>

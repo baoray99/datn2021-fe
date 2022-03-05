@@ -1,7 +1,7 @@
 export const ServicePath = {
   COURSE_SERVICE: 'courses',
   AUTH_SERVICE: 'users',
-  LESSION_SERVICE: 'lessions',
+  LESSON_SERVICE: 'lessons',
   ROLE_SERVICE: 'roles',
   COMMENT_SERVICE: 'comments',
   CHAT_SERVICE:'chat'

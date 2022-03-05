@@ -1,17 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { map } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Image } from 'src/app/utils/models/photo/image.model';
-import { User } from 'src/app/utils/models/user/user.model';
 import { AuthService } from 'src/app/utils/services/aas-network/auth/auth.service';
 import { ImageService } from 'src/app/utils/services/aas-network/image/image.service';
 import { Course } from '../../../utils/models/course/course.model';
 import { CourseManagerService } from '../../../utils/services/aas-network/course-manager/course-manager.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-course-manager-page',
@@ -25,11 +21,11 @@ export class CourseManagerPageComponent implements OnInit {
   formCourse!: FormGroup;
   selectedCourse: Course = {
     _id: '',
-    author: null,
+    user_id: null,
     description: '',
     image: '',
-    totalMember: 0,
-    lessions: [],
+    total_member: 0,
+    lessons: [],
     members: [],
     name: '',
     rating: 0,
@@ -42,7 +38,9 @@ export class CourseManagerPageComponent implements OnInit {
     private courseService: CourseManagerService,
     private authService: AuthService,
     private fb: FormBuilder,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private message: NzMessageService,
+    private modal: NzModalService
   ) {}
 
   ngOnInit(): void {
@@ -62,12 +60,12 @@ export class CourseManagerPageComponent implements OnInit {
       });
     }
   }
-  
+
   getTeachingCourse() {
     this.authService.getTeachingCourse().subscribe((res: any) => {
       this.courseList = [];
-      if (res && res.teachingCourse instanceof Array) {
-        res.teachingCourse.forEach((item) => {
+      if (res && res.teaching_courses instanceof Array) {
+        res.teaching_courses.forEach((item) => {
           this.courseList.push(new Course(item));
         });
       }
@@ -79,12 +77,12 @@ export class CourseManagerPageComponent implements OnInit {
       (res: any) => {
         this.selectedCourse = {
           _id: '',
-          author: null,
+          user_id: null,
           description: '',
           image: '',
-          totalMember: 0,
+          total_member: 0,
           members: [],
-          lessions: [],
+          lessons: [],
           name: '',
           rating: 0,
           slug: '',
@@ -107,12 +105,12 @@ export class CourseManagerPageComponent implements OnInit {
     this.isEdit = false;
     this.selectedCourse = {
       _id: '',
-      author: null,
+      user_id: null,
       description: '',
       image: '',
       members: [],
-      totalMember: 0,
-      lessions: [],
+      total_member: 0,
+      lessons: [],
       name: '',
       rating: 0,
       slug: '',
@@ -135,16 +133,18 @@ export class CourseManagerPageComponent implements OnInit {
           .updateCourse(this.selectedCourse._id, editCourse)
           .subscribe(
             (res: any) => {
-              console.log('update success');
+              this.message.success('Cập nhật khóa học thành công!');
               this.close();
+              this.getMe();
             },
             (error) => {
               console.log(error);
+              this.message.error('Cập nhật khóa học thất bại!');
             }
           );
       } else {
         const newCourse = {
-          author: this.userId,
+          user_id: this.userId,
           name: this.formCourse.value.name,
           description: this.formCourse.value.description,
           image:
@@ -153,11 +153,13 @@ export class CourseManagerPageComponent implements OnInit {
               : this.currentImageUpload.url,
         };
         this.courseService.createCourse(newCourse).subscribe((res: any) => {
-          console.log('add course success');
+          this.message.success('Tạo khóa học thành công!');
           this.close();
+          this.getMe();
         }),
           (error) => {
             console.log(error);
+            this.message.success('Tạo khóa học thất bại!');
           };
       }
     } else {
@@ -175,9 +177,20 @@ export class CourseManagerPageComponent implements OnInit {
     this.selectedImage = undefined;
     this.currentImageUpload = this.imageService.uploadFile(new Image(file));
   }
-  confirmDeleteCourse(id: string): void {
-    this.courseService.deleteCourse(id).subscribe((res: any) => {}),
-      (error) => {};
+  confirmDeleteCourse(id: string): void {}
+  showDeleteConfirm(id): void {
+    this.modal.confirm({
+      nzTitle: 'Bạn có chắc chắn muốn xóa khóa học này?',
+      nzOkText: 'Có',
+      nzOkType: 'primary',
+      nzOnOk: () =>
+        this.courseService.deleteCourse(id).subscribe((res: any) => {
+          this.message.success('Xóa khóa học thành công!');
+          this.getMe();
+        }),
+      nzCancelText: 'Hủy',
+      nzOnCancel: () => console.log('Cancel'),
+    });
   }
   cancel() {}
   deleteImage() {

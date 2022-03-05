@@ -36,6 +36,7 @@
   background-color: var(--primary-color);
   box-shadow: 0 -4px 32px rgb(0 0 0 / 20%);
   transition: filter 0.2s ease;
+  color: white;
 }
 .app_chat-btn:hover {
   filter: brightness(110%);

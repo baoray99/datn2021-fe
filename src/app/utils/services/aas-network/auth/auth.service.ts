@@ -17,6 +17,7 @@ const USER_DETAIL = ServicePath.AUTH_SERVICE;
 const USER_ME = ServicePath.AUTH_SERVICE + '/me';
 const USER_DELETE = ServicePath.AUTH_SERVICE;
 const UNREGISTER_COURSE = ServicePath.AUTH_SERVICE + '/unregister-course';
+const UNTEACHING_COURSE = ServicePath.AUTH_SERVICE + '/unteaching-course';
 const ALL_COURSE_LOGINED = ServicePath.AUTH_SERVICE + '/all-course-logined';
 
 @Injectable({

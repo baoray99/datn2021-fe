@@ -3,12 +3,12 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'src/app/utils/models/course/course.model';
-import { Lession } from 'src/app/utils/models/lession/lession.model';
+import { Lesson } from 'src/app/utils/models/lesson/lesson.model';
 import { User } from 'src/app/utils/models/user/user.model';
 import { AuthService } from 'src/app/utils/services/aas-network/auth/auth.service';
 import { CommentManagerService } from 'src/app/utils/services/aas-network/comment-manager/comment-manager.service';
 import { CourseManagerService } from 'src/app/utils/services/aas-network/course-manager/course-manager.service';
-import { LessionManagerService } from 'src/app/utils/services/aas-network/lession-manager/lession-manager.service';
+import { LessonManagerService } from 'src/app/utils/services/aas-network/lesson-manager/lesson-manager.service';
 
 @Component({
   selector: 'app-learn-page',
@@ -20,28 +20,28 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private courseService: CourseManagerService,
-    private lessionService: LessionManagerService,
+    private lessonService: LessonManagerService,
     private authService: AuthService,
     private fb: FormBuilder,
     private commentService: CommentManagerService
   ) {
     this.route.queryParamMap.subscribe((query) => {
-      this.getLessionById(query.get('_id'));
+      this.getLessonById(query.get('_id'));
     });
   }
   isCollapse: boolean = false;
   slug: string = '';
-  idLession: string = '';
+  idLesson: string = '';
   user: User = null;
   course: Course;
-  lessionList: Lession[] = [];
-  currentLession: Lession = null;
+  lessonList: Lesson[] = [];
+  currentLesson: Lesson = null;
   currentVideo: string = '';
   formComment: FormGroup;
   relateCourses = [];
   ngOnInit(): void {
     this.slug = this.route.snapshot.paramMap.get('slug');
-    this.idLession = this.route.snapshot.queryParamMap.get('_id');
+    this.idLesson = this.route.snapshot.queryParamMap.get('_id');
     this.formComment = this.fb.group({
       content: [null, [Validators.required]],
     });
@@ -98,8 +98,8 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
   pushComment() {
     if (this.formComment.valid) {
       const newComment = {
-        userId: this.user._id,
-        lessionId: this.currentLession._id,
+        user_id: this.user._id,
+        lesson_id: this.currentLesson._id,
         content: this.formComment.value.content,
       };
       this.commentService.createComment(newComment).subscribe(
@@ -119,18 +119,18 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  collapseLession(): void {
+  collapseLesson(): void {
     const content = document.querySelector<HTMLElement>('.content');
     const viewCourse = document.querySelector<HTMLElement>('.view-course');
     const relateContent =
       document.querySelector<HTMLElement>('.relate-content');
-    const lessions = document.querySelector<HTMLElement>('.lessions');
+    const lessons = document.querySelector<HTMLElement>('.lessons');
     const btnExpand = document.querySelector<HTMLElement>(
       '.view-course__expand-btn'
     );
     this.isCollapse = !this.isCollapse;
     if (this.isCollapse) {
-      lessions.style.display = 'none';
+      lessons.style.display = 'none';
       content.classList.add('col');
       content.classList.add('col-lg-12');
       viewCourse.style.height = '70vh';
@@ -139,17 +139,17 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
       btnExpand.classList.add('active');
     }
   }
-  expandLession(): void {
+  expandLesson(): void {
     const content = document.querySelector<HTMLElement>('.content');
     const viewCourse = document.querySelector<HTMLElement>('.view-course');
     const relateContent =
       document.querySelector<HTMLElement>('.relate-content');
-    const lessions = document.querySelector<HTMLElement>('.lessions');
+    const lessons = document.querySelector<HTMLElement>('.lessons');
     const btnExpand = document.querySelector<HTMLElement>(
       '.view-course__expand-btn'
     );
     this.isCollapse = false;
-    lessions.style.display = 'block';
+    lessons.style.display = 'block';
     content.classList.remove('col');
     content.classList.remove('col-lg-12');
     btnExpand.classList.remove('active');
@@ -171,16 +171,16 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
     this.courseService.getCourseBySlug(slug).subscribe(
       (res: any) => {
         this.course = null;
-        if (res && res instanceof Object && res.lessions instanceof Array) {
+        if (res && res instanceof Object && res.lessons instanceof Array) {
           this.course = res;
-          res.lessions.forEach((item) => {
-            this.lessionList.push(new Lession(item));
+          res.lessons.forEach((item) => {
+            this.lessonList.push(new Lesson(item));
           });
         }
         this.router.navigate(['/learn', this.course.slug], {
-          queryParams: { _id: this.course.lessions[0]._id },
+          queryParams: { _id: this.course.lessons[0]._id },
         });
-        this.getLessionById(this.idLession);
+        this.getLessonById(this.idLesson);
         this.getRelateCourse(this.course.name);
       },
       (error) => {
@@ -188,23 +188,23 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  getLessionById(id: string) {
-    this.lessionService.getLessionById(id).subscribe((res: any) => {
-      this.currentLession = null;
+  getLessonById(id: string) {
+    this.lessonService.getLessonById(id).subscribe((res: any) => {
+      this.currentLesson = null;
       if (res && res instanceof Object && res.comments instanceof Array) {
-        this.currentLession = new Lession(res);
+        this.currentLesson = new Lesson(res);
         document.querySelector<HTMLIFrameElement>('.view-course-ytb').src =
-          'https://www.youtube.com/embed/' + this.currentLession.idVideo;
+          'https://www.youtube.com/embed/' + this.currentLesson.video_id;
       }
     });
   }
-  changeCurrentVideo() {
-    const listLession =
-      document.querySelectorAll<HTMLElement>('.list-lession-item');
-    listLession.forEach((item) => {
+  changeCurrentVideo(id) {
+    const listLesson =
+      document.querySelectorAll<HTMLElement>('.list-lesson-item');
+    listLesson.forEach((item) => {
       item.addEventListener('click', function () {
         document
-          .querySelector<HTMLElement>('.list-lession-item.active')
+          .querySelector<HTMLElement>('.list-lesson-item.active')
           .classList.remove('active');
         this.classList.add('active');
       });

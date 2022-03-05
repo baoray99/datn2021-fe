@@ -1,0 +1,147 @@
+<app-spinner></app-spinner>
+<div class="lesson-manager">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col col-lg-8">
+        <div class="lesson-manager__detail">
+          <div class="lesson-manager__header">
+            <div class="lesson-manager__header-left">
+              <h1 class="lesson-manager__course-name">
+                {{ course?.name }}
+              </h1>
+              <p class="lesson-manager__course-description">
+                {{ course?.description }}
+              </p>
+            </div>
+          </div>
+          <div class="lesson-manager__content">
+            <h2 class="lesson-manager__title">Nội dung khóa học</h2>
+            <p class="lesson-manager__count">
+              <i class="fas fa-circle"></i>{{ lessonList.length }} bài học
+            </p>
+            <ng-container *ngIf="lessonList.length > 0; else elseTemplate">
+              <ul class="lesson-manager__list">
+                <li
+                  class="lesson-manager__item"
+                  *ngFor="let lesson of lessonList"
+                >
+                  <span class="lesson-manager__item-name">
+                    {{ lesson.name }}
+                  </span>
+                  <div class="lesson-manager__item-controls">
+                    <span
+                      class="lesson-manager__item-btn"
+                      (click)="toggleEdit(lesson._id)"
+                      ><i class="fas fa-pen lesson-manager__item-edit-icon"></i
+                    ></span>
+                    <span
+                      class="lesson-manager__item-btn"
+                      (click)="showDeleteConfirm(lesson._id)"
+                      ><i
+                        class="fas fa-times lesson-manager__item-delete-icon"
+                      ></i
+                    ></span>
+                  </div>
+                </li>
+              </ul>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <div class="lesson-manager__non">
+                Hãy thêm bài học cho khóa học này
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-4">
+        <div class="lesson-manager__course">
+          <img
+            src="{{ course?.image }}"
+            class="lesson-manager__course-img"
+            alt=""
+            height="220px"
+            width="390px"
+          />
+          <div class="lesson-manager__course-detail">
+            <button
+              class="lesson-manager__add-btn form__btn-submit btn btn-primary"
+              (click)="toggleLessonForm()"
+            >
+              <i class="fas fa-plus lesson-manager__add-icon"></i>
+              Thêm bài học mới
+            </button>
+            <h1 class="lesson-manager__course-free">Miễn phí</h1>
+            <ul class="lesson-manager__course-list-detail">
+              <li class="lesson-manager__course-detail-item">
+                <i class="fas fa-film lesson-manager__course-detail-icon"></i>
+                <span
+                  >Tống số <strong>{{ lessonList.length }}</strong> bài
+                  học</span
+                >
+              </li>
+              <li class="lesson-manager__course-detail-item">
+                <i
+                  class="
+                    fas
+                    fa-battery-full
+                    lesson-manager__course-detail-icon
+                  "
+                ></i>
+                <span>Học mọi lúc, mọi nơi</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lesson-form__modal" (click)="toggleLessonForm()">
+  <form
+    [formGroup]="lessonForm"
+    class="lesson-form"
+    (ngSubmit)="lessonFormSubmit()"
+    (click)="$event.stopPropagation()"
+  >
+    <header class="lesson-form__header">
+      <h2 class="lesson-form__heading">
+        {{ isEdit ? "Chỉnh sủa bài học" : "Thêm bài học mới" }}
+      </h2>
+    </header>
+    <hr />
+    <div class="form__group">
+      <label class="form__label" for="name">Tên bài học?</label>
+      <input
+        class="form__input"
+        type="text"
+        id="name"
+        formControlName="name"
+        [(ngModel)]="selectedLesson.name"
+        placeholder="Tên bài học"
+      />
+    </div>
+    <div class="form__group">
+      <label class="form__label" for="videoLink">Id Video</label>
+      <input
+        class="form__input"
+        type="text"
+        id="videoLink"
+        formControlName="video_id"
+        [(ngModel)]="selectedLesson.video_id"
+        placeholder="Id video, ví dụ: zxdSHfZFKkY..."
+      />
+    </div>
+    <div class="form__btn-group">
+      <button type="submit" class="form__btn-submit btn btn-primary my-1">
+        {{ isEdit ? "Cập nhật bài học này" : "Thêm bài học này" }}
+      </button>
+      <button
+        type="button"
+        class="form__btn-submit btn btn-danger"
+        (click)="toggleLessonForm()"
+      >
+        Hủy bỏ
+      </button>
+    </div>
+  </form>
+</div>

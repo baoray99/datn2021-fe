@@ -1,28 +1,28 @@
 @import "../../../../themes/_theme-variables.css";
 
-.lession-page {
+.lesson-page {
   position: relative;
   display: flex;
   padding: 0 44px 68px;
   height: auto;
 }
-.lession-page__detail {
+.lesson-page__detail {
 }
-.lession-page__header {
+.lesson-page__header {
 }
-.lession-page__course-name {
+.lesson-page__course-name {
   font-weight: 600;
   margin-bottom: 16px;
 }
-.lession-page__course-description {
+.lesson-page__course-description {
   margin-bottom: 20px;
 }
-.lession-page__content {
+.lesson-page__content {
 }
-.lession-page__title {
+.lesson-page__title {
   font-weight: 600;
 }
-.lession-page__count {
+.lesson-page__count {
   display: flex;
   align-items: center;
 }
@@ -31,9 +31,9 @@
   font-size: 4px;
   color: var(--text-color);
 }
-.lession-page__list {
+.lesson-page__list {
 }
-.lession-page__item {
+.lesson-page__item {
   position: relative;
   padding: 8px 10px;
   margin-bottom: 10px;
@@ -46,40 +46,40 @@
   align-items: center;
   justify-content: space-between;
 }
-.lession-page__item:hover .lession-page__item-controls {
+.lesson-page__item:hover .lesson-page__item-controls {
   display: block;
 }
-.lession-page__item-name {
+.lesson-page__item-name {
   font-size: 16px;
   font-weight: 600;
 }
-.lession-page__item-controls {
+.lesson-page__item-controls {
   display: none;
 }
-.lession-page__item-btn {
+.lesson-page__item-btn {
   cursor: pointer;
   margin: 0 5px;
 }
-.lession-page__item-edit-icon {
+.lesson-page__item-edit-icon {
   font-size: 16px;
   color: var(--primary-color);
 }
-.lession-page__item-delete-icon {
+.lesson-page__item-delete-icon {
   font-size: 16px;
   color: var(--danger-color);
 }
-.lession-page__item-edit-form {
+.lesson-page__item-edit-form {
   display: block;
   width: 100%;
 }
 
-.lession-page__add-btn {
+.lesson-page__add-btn {
 }
-.lession-page__add-icon {
+.lesson-page__add-icon {
 }
-.lession-page__non {
+.lesson-page__non {
 }
-.lession-page__course {
+.lesson-page__course {
   position: sticky;
   position: -webkit-sticky;
   margin-top: 10px;
@@ -90,30 +90,30 @@
   flex-direction: column;
   align-items: center;
 }
-.lession-page__course-img {
+.lesson-page__course-img {
   border-radius: 10px;
 }
-.lession-page__btn-dangky {
+.lesson-page__btn-dangky {
   margin-top: 16px;
 }
-.lession-page__course-detail {
+.lesson-page__course-detail {
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 20px 0;
 }
-.lession-page__course-free {
+.lesson-page__course-free {
   font-weight: 500;
   font-size: 32px;
   color: var(--primary-color);
   text-align: center;
   margin: 16px 0;
 }
-.lession-page__course-list-detail {
+.lesson-page__course-list-detail {
   margin: 0 auto;
 }
-.lession-page__course-detail-item {
+.lesson-page__course-detail-item {
 }
-.lession-page__course-detail-icon {
+.lesson-page__course-detail-icon {
   width: 30px;
 }

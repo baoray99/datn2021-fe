@@ -1,0 +1,79 @@
+<app-spinner></app-spinner>
+<div class="lesson-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col col-lg-8">
+        <div class="lesson-page__detail">
+          <div class="lesson-page__header">
+            <div class="lesson-page__header-left">
+              <h1 class="lesson-page__course-name">
+                {{ course?.name }}
+              </h1>
+              <p class="lesson-page__course-description">
+                {{ course?.description }}
+              </p>
+            </div>
+          </div>
+          <div class="lesson-page__content">
+            <h2 class="lesson-page__title">Nội dung khóa học</h2>
+            <p class="lesson-page__count">
+              <i class="fas fa-circle"></i>{{ lessonList?.length }} bài học
+            </p>
+            <ng-container *ngIf="lessonList?.length > 0; else elseTemplate">
+              <ul class="lesson-page__list">
+                <li
+                  class="lesson-page__item"
+                  *ngFor="let lesson of lessonList"
+                >
+                  <span class="lesson-page__item-name">
+                    {{ lesson.name }}
+                  </span>
+                </li>
+              </ul>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <div class="lesson-page__non">
+                Hãy thêm bài học cho khóa học này
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-4">
+        <div class="lesson-page__course">
+          <img
+            src="{{ course?.image }}"
+            class="lesson-page__course-img"
+            alt=""
+            height="220px"
+            width="390px"
+          />
+          <button
+            class="lesson-page__btn-dangky btn btn-primary form__btn-submit"
+            (click)="registerCourse(course._id)"
+          >
+            Đăng ký học
+          </button>
+          <div class="lesson-page__course-detail">
+            <h1 class="lesson-page__course-free">Miễn phí</h1>
+            <ul class="lesson-page__course-list-detail">
+              <li class="lesson-page__course-detail-item">
+                <i class="fas fa-film lesson-page__course-detail-icon"></i>
+                <span
+                  >Tống số <strong>{{ lessonList?.length }}</strong> bài
+                  học</span
+                >
+              </li>
+              <li class="lesson-page__course-detail-item">
+                <i
+                  class="fas fa-battery-full lesson-page__course-detail-icon"
+                ></i>
+                <span>Học mọi lúc, mọi nơi</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
