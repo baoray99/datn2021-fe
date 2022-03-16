@@ -54,7 +54,11 @@ export class UserComponent implements OnInit {
     boxChat.classList.toggle('active');
     if (this.isOpen) {
       this.join(name, this.roomId);
-      this.chatService.callChatbot({ roomId: this.roomId }).subscribe();
+      this.chatService
+        .callChatbot({ roomId: this.roomId })
+        .subscribe((res: any) => {
+          console.log(res);
+        });
       this.chatService
         .getMessage()
         .subscribe((data: { user: string; message: string }) => {

@@ -1,0 +1,109 @@
+@import "../../../../themes/_theme-variables.css";
+.edit-container {
+  max-width: 900px;
+  height: 100%;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+.edit-main {
+  width: 100%;
+}
+.edit-title {
+  font-weight: 500;
+}
+.edit-sub-title {
+  font-weight: 600;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.edit-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+.edit-group__left {
+  flex: 8;
+  flex-shrink: 0;
+}
+.edit-group__left.avatar {
+  display: flex;
+  align-items: flex-start;
+}
+.edit-group__title {
+  font-weight: 600;
+}
+.edit-group__val {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  outline: none;
+  background-color: var(--bg-color);
+  width: 80%;
+}
+.edit-group__avatar {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+.edit-group__label-avatar {
+  display: none;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+.edit-group__label-avatar.active {
+  display: flex;
+}
+.edit-group__label-avatar:hover .fa-camera {
+  color: white;
+}
+.fa-camera {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: auto;
+}
+.edit-group__right {
+  flex: 2;
+  display: none;
+  align-items: center;
+}
+.edit-group__right.active {
+  display: flex;
+}
+.edit-group__btn-save {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+.edit-group__btn-cancel {
+  margin: 0 auto;
+}
+.edit-group__btn-cancel,
+.btn-edit {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: black;
+  transition: all 0.2s ease;
+}
+.edit-group__btn-cancel:hover,
+.btn-edit:hover {
+  border: 1px solid black;
+}
+.btn-cs {
+  height: 37px;
+  line-height: 37px;
+  padding: 0 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+}
+.btn-edit-box {
+  flex: 2;
+  display: none;
+}
+.btn-edit-box.active {
+  display: block;
+}

@@ -1,6 +1,172 @@
+<app-spinner></app-spinner>
 <div class="edit-container">
-    <div class="edit-main">
-        <h1 class="edit-title">Cài đặt</h1>
-        
+  <div class="edit-main" *ngIf="user !== null">
+    <h1 class="edit-title">Cài đặt</h1>
+    <h2 class="edit-sub-title">Thông tin cá nhân</h2>
+    <div class="edit-group">
+      <div class="edit-group__left">
+        <h3 class="edit-group__title">Họ tên</h3>
+        <input type="text" placeholder="Thêm họ và tên" class="edit-group__val val-name" disabled [(ngModel)]="user.name" />
+      </div>
+      <div class="btn-edit-box btn-edit-name active">
+        <button
+        class="btn-edit btn-cs "
+        (click)="toggleEdit('name')"
+      >
+        Chỉnh sửa
+      </button>
+      </div>
+      <div class="edit-group__right group-edit-name">
+        <button class="edit-group__btn-save btn-cs" (click)="toggleEdit('name');submitChange()">Lưu</button>
+        <button
+          class="edit-group__btn-cancel btn-cs"
+          (click)="toggleEdit('name'); cancelEdit('name')"
+        >
+          Hủy
+        </button>
+      </div>
     </div>
+    <div class="edit-group">
+      <div class="edit-group__left">
+        <h3 class="edit-group__title">Bio</h3>
+        <input type="text" placeholder="Thêm giới thiệu" class="edit-group__val val-bio" disabled [(ngModel)]="user.bio" />
+      </div>
+      <div class="btn-edit-box btn-edit-bio active">
+        <button
+        class="btn-edit btn-cs "
+        (click)="toggleEdit('bio')"
+      >
+        Chỉnh sửa
+      </button>
+      </div>
+      <div class="edit-group__right group-edit-bio">
+        <button class="edit-group__btn-save btn-cs" (click)="toggleEdit('bio');submitChange()">Lưu</button>
+        <button
+          class="edit-group__btn-cancel btn-cs"
+          (click)="toggleEdit('bio'); cancelEdit('bio')"
+        >
+          Hủy
+        </button>
+      </div>
+    </div>
+    <div class="edit-group">
+      <div class="edit-group__left">
+        <h3 class="edit-group__title">Số điện thoại</h3>
+        <input type="text" placeholder="Thêm số điện thoại" class="edit-group__val val-phone" [(ngModel)]="user.phone" />
+      </div>
+      <div class="btn-edit-box btn-edit-phone active">
+        <button
+        class="btn-edit btn-cs "
+        (click)="toggleEdit('phone')"
+      >
+        Chỉnh sửa
+      </button>
+      </div>
+      <div class="edit-group__right group-edit-phone">
+        <button class="edit-group__btn-save btn-cs" (click)="toggleEdit('phone');submitChange()">Lưu</button>
+        <button
+          class="edit-group__btn-cancel btn-cs"
+          (click)="toggleEdit('phone'); cancelEdit('phone')"
+        >
+          Hủy
+        </button>
+      </div>
+    </div>
+    <div class="edit-group">
+      <div class="edit-group__left avatar">
+        <h3 class="edit-group__title">Avatar</h3>
+        <div  class="edit-group__avatar" (click)="toggleUpload('avatar')" style="background-image: url({{user?.avatar}}); background-size: cover;">
+          <label for="upload_avatar" class="edit-group__label-avatar"><i class="fas fa-camera"></i></label>
+          <input type="file" hidden="true" id="upload_avatar" (change)="upload($event)" /></div>
+      </div>
+      <div class="btn-edit-box btn-edit-avatar active">
+        <button
+        class="btn-edit btn-cs "
+        (click)="toggleUpload('avatar')"
+      >
+        Chỉnh sửa
+      </button>
+      </div>
+      
+      <div class="edit-group__right group-edit-avatar">
+        <button class="edit-group__btn-save btn-cs" (click)="toggleUpload('avatar');submitChange()">Lưu</button>
+        <button
+          class="edit-group__btn-cancel btn-cs"
+          (click)="toggleUpload('avatar'); cancelEdit('avatar')"
+        >
+          Hủy
+        </button>
+      </div>
+    </div>
+    <h2 class="edit-sub-title">Mạng xã hội</h2>
+    <div class="edit-group">
+      <div class="edit-group__left">
+        <h3 class="edit-group__title">Facebook</h3>
+        <input type="text" placeholder="Eg. https://www.facebook.com/letslearn" class="edit-group__val val-facebook" disabled [(ngModel)]="user.facebook" />
+      </div>
+      <div class="btn-edit-box btn-edit-facebook active">
+        <button
+        class="btn-edit btn-cs "
+        (click)="toggleEdit('facebook')"
+      >
+        Chỉnh sửa
+      </button>
+      </div>
+      <div class="edit-group__right group-edit-facebook">
+        <button class="edit-group__btn-save btn-cs" (click)="toggleEdit('facebook');submitChange()">Lưu</button>
+        <button
+          class="edit-group__btn-cancel btn-cs"
+          (click)="toggleEdit('facebook'); cancelEdit('facebook')"
+        >
+          Hủy
+        </button>
+      </div>
+    </div>
+    <div class="edit-group">
+      <div class="edit-group__left">
+        <h3 class="edit-group__title">Instagram</h3>
+        <input type="text" placeholder="Eg. https://www.instagram.com/letslearn" class="edit-group__val val-insta" disabled [(ngModel)]="user.instagram" />
+      </div>
+      <div class="btn-edit-box btn-edit-insta active">
+        <button
+        class="btn-edit btn-cs "
+        (click)="toggleEdit('insta')"
+      >
+        Chỉnh sửa
+      </button>
+      </div>
+      <div class="edit-group__right group-edit-insta">
+        <button class="edit-group__btn-save btn-cs" (click)="toggleEdit('insta');submitChange()">Lưu</button>
+        <button
+          class="edit-group__btn-cancel btn-cs"
+          (click)="toggleEdit('insta');cancelEdit('instagram')"
+        >
+          Hủy
+        </button>
+      </div>
+    </div>
+    <div class="edit-group">
+      <div class="edit-group__left">
+        <h3 class="edit-group__title">Youtube</h3>
+        <input type="text" placeholder="https://www.youtube.com/channel/letslearnOfficial" class="edit-group__val val-youtube" disabled [(ngModel)]="user.youtube" />
+      </div>
+      <div class="btn-edit-box btn-edit-youtube active">
+        <button
+        class="btn-edit btn-cs "
+        (click)="toggleEdit('youtube')"
+      >
+        Chỉnh sửa
+      </button>
+      </div>
+      <div class="edit-group__right group-edit-youtube">
+        <button class="edit-group__btn-save btn-cs" (click)="toggleEdit('youtube');submitChange()">Lưu</button>
+        <button
+          class="edit-group__btn-cancel btn-cs"
+          (click)="toggleEdit('youtube');cancelEdit('youtube')"
+        >
+          Hủy
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

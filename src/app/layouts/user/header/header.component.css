@@ -182,6 +182,7 @@
   height: 46px;
   width: 46px;
   border-radius: 50%;
+  overflow: hidden;
 }
 .navbar__user-name {
   padding-left: 12px;

@@ -65,6 +65,25 @@ export class ImageService {
       .subscribe();
     return image;
   }
+  uploadFileUser(image: Image) {
+    const filePath = `${USER_IMAGE}/${image.file.name}`;
+    const storageRef = this.storage.ref(filePath);
+    const uploadTask = this.storage.upload(filePath, image.file);
+    uploadTask
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          storageRef.getDownloadURL().subscribe((downloadURL) => {
+            image.url = downloadURL;
+            image.name = image.file.name;
+            this.saveFileData(image);
+          });
+        })
+      )
+      //show % tien do, progress bar
+      .subscribe();
+    return image;
+  }
 
   private saveFileData(Image: Image): void {
     this.db.list(COURSE_IMAGE).push(Image);

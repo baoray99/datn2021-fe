@@ -177,7 +177,6 @@ export class CourseManagerPageComponent implements OnInit {
     this.selectedImage = undefined;
     this.currentImageUpload = this.imageService.uploadFile(new Image(file));
   }
-  confirmDeleteCourse(id: string): void {}
   showDeleteConfirm(id): void {
     this.modal.confirm({
       nzTitle: 'Bạn có chắc chắn muốn xóa khóa học này?',

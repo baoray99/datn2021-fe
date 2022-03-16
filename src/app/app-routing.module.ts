@@ -10,6 +10,7 @@ import { HomePageComponent } from './service-pages/service-enduser/home-page/hom
 import { LearnPageComponent } from './service-pages/service-enduser/learn-page/learn-page.component';
 import { CoursePageComponent } from './service-pages/service-enduser/course-page/course-page.component';
 import { LessonPageComponent } from './service-pages/service-enduser/lesson-page/lesson-page.component';
+import { EditMePageComponent } from './service-pages/service-enduser/edit-me-page/edit-me-page.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'my-course', component: LessonManagerPageComponent },
       { path: 'courses', component: CoursePageComponent },
       { path: 'courses/:slug', component: LessonPageComponent },
+      { path: 'me', component: EditMePageComponent },
     ],
   },
   {
