@@ -74,12 +74,12 @@
                       >
                         <img
                           class="comment-tab__avt"
-                          src="{{ comment?.user?.avatar }}"
+                          src="{{ comment?.user_id?.avatar }}"
                           alt=""
                         />
                         <div class="comment-tab__content">
                           <h4 class="comment-tab__content-name">
-                            {{ comment?.user?.name }}
+                            {{ comment?.user_id?.name }}
                           </h4>
                           <p class="comment-tab__content-text">
                             {{ comment?.content }}
@@ -97,12 +97,15 @@
               <div class="course-manager__course-list">
                 <div class="container-fluid">
                   <div class="row">
-                    <div class="col col-lg-3" *ngFor="let course of relateCourses">
+                    <div
+                      class="col col-lg-3"
+                      *ngFor="let course of relateCourses"
+                    >
                       <div
                         class="course-manager__course-item"
                         [routerLink]="['/courses', course.slug]"
                         style="
-                        background-image: url({{course?.image}});
+                        background-image: url({{ course?.image }});
                       "
                       ></div>
                       <div class="course-manager__course-detail">
@@ -158,7 +161,7 @@
           <li
             class="list-lesson-item"
             *ngFor="let lesson of lessonList; index as idx; first as isFirst"
-            [ngClass]="isFirst ? 'active' : ''"
+            [ngClass]="{ 'active': isFirst }"
             routerLink="/learn/{{ course.slug }}"
             [queryParams]="{ _id: lesson._id }"
             (click)="changeCurrentVideo(lesson._id)"

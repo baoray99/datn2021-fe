@@ -104,7 +104,8 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
       };
       this.commentService.createComment(newComment).subscribe(
         (res: any) => {
-          console.log('create success');
+          this.getLessonById(this.idLesson);
+          console.log('success');
         },
         (error) => {
           console.log(error);
@@ -193,6 +194,7 @@ export class LearnPageComponent implements OnInit, AfterViewInit {
       this.currentLesson = null;
       if (res && res instanceof Object && res.comments instanceof Array) {
         this.currentLesson = new Lesson(res);
+        console.log(this.currentLesson);
         document.querySelector<HTMLIFrameElement>('.view-course-ytb').src =
           'https://www.youtube.com/embed/' + this.currentLesson.video_id;
       }

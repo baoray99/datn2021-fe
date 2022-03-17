@@ -17,6 +17,8 @@ export class LessonPageComponent implements OnInit {
   course: Course = null;
   lessonList: Lesson[] = [];
   userId: string = '';
+  registeredCourses: Course[] = [];
+  isIncluded: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -28,24 +30,37 @@ export class LessonPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.paramMap.get('slug');
-    this.getMe();
     this.getCourseBySlug(this.slug);
+    this.getMe();
   }
   getMe() {
     if (window.localStorage.getItem('token')) {
       this.authService.getMe().subscribe((res: any) => {
         if (res && res instanceof Object) {
           this.userId = res._id;
+          this.getRegisteredCourses();
         }
       });
     }
   }
+  getRegisteredCourses() {
+    this.authService.getRegisteredCourses().subscribe((res: any) => {
+      this.registeredCourses = [];
+      if (res && res.registered_courses instanceof Array) {
+        res.registered_courses.forEach((item) => {
+          this.registeredCourses.push(new Course(item));
+        });
+        this.checkCourse(this.course);
+      }
+    });
+  }
+
   getCourseBySlug(slug: string) {
     this.courseService.getCourseBySlug(slug).subscribe(
       (res: any) => {
         this.course = null;
         if (res && res instanceof Object && res.lessons instanceof Array) {
-          this.course = res;
+          this.course = new Course(res);
           res.lessons.forEach((item) => {
             this.lessonList.push(new Lesson(item));
           });
@@ -65,7 +80,7 @@ export class LessonPageComponent implements OnInit {
         })
         .subscribe(
           (res: any) => {
-            this.message.success("Đăng ký khóa học thành công!")
+            this.message.success('Đăng ký khóa học thành công!');
             this.router.navigate([`/learn/${this.slug}`]);
           },
           (error) => {
@@ -75,5 +90,10 @@ export class LessonPageComponent implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
+  }
+  checkCourse(course) {
+    if (this.registeredCourses.some((item) => item.slug === course.slug)) {
+      this.isIncluded = true;
+    } else this.isIncluded = false;
   }
 }

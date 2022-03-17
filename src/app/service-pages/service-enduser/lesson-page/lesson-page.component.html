@@ -48,12 +48,24 @@
             height="220px"
             width="390px"
           />
-          <button
+          <ng-container *ngIf="isIncluded; else elseChecked">
+            <button
+            class="lesson-page__btn-dangky btn btn-primary form__btn-submit"
+            [routerLink]="['/learn', course.slug]"
+          >
+            Tiếp tục học
+          </button>
+          </ng-container>
+          <ng-template #elseChecked>
+            <button
             class="lesson-page__btn-dangky btn btn-primary form__btn-submit"
             (click)="registerCourse(course._id)"
           >
             Đăng ký học
           </button>
+          </ng-template>
+          
+          
           <div class="lesson-page__course-detail">
             <h1 class="lesson-page__course-free">Miễn phí</h1>
             <ul class="lesson-page__course-list-detail">

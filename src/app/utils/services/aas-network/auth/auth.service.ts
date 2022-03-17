@@ -79,9 +79,9 @@ export class AuthService {
   }
 
   //GEt popular unregister course
-  getPopularCourseWithLogin(registerCourse: any) {
+  getPopularCourseWithLogin(registerdCourse: any) {
     const url = UNREGISTER_COURSE;
-    return this.api.post(url, registerCourse);
+    return this.api.post(url, registerdCourse);
   }
   getAllCourseWithLogin(registerdCourse: any) {
     const url = ALL_COURSE_LOGINED;

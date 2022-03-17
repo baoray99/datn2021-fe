@@ -110,9 +110,7 @@ export class HomePageComponent implements OnInit, AfterViewInit {
         console.log(this.registeredCourses);
 
         if (this.registeredCourses.length > 0) {
-          this.getPopularCourseWithLogin({
-            registered_courses: this.registeredCourses,
-          });
+          this.getPopularCourseWithLogin(this.registeredCourses);
         } else {
           this.getPopularCourse();
         }
@@ -126,6 +124,7 @@ export class HomePageComponent implements OnInit, AfterViewInit {
         if (res && res instanceof Array) {
           res.forEach((item) => {
             this.popularCourses.push(new Course(item));
+            console.log(this.popularCourses);
           });
         }
       },
@@ -145,6 +144,7 @@ export class HomePageComponent implements OnInit, AfterViewInit {
           if (res && res instanceof Array) {
             res.forEach((item) => {
               this.popularCourses.push(new Course(item));
+              console.log(this.popularCourses);
             });
           }
         },

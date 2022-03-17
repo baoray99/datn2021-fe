@@ -112,7 +112,7 @@
   transition: all 0.2s ease;
 }
 .list-lesson-item.active {
-  background-color: var(--active-lesson);
+  background-color: var(--active-lesson) !important;
 }
 .list-lesson-item:hover {
   background-color: var(--border-input);
