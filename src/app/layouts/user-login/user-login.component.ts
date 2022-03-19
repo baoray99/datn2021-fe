@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd';
 import { Role } from 'src/app/utils/models/role/role.model';
 import { RoleManagerService } from 'src/app/utils/services/aas-network/role/role-manager.service';
 import { AuthService } from '../../utils/services/aas-network/auth/auth.service';
@@ -18,7 +19,8 @@ export class UserLoginComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private roleService: RoleManagerService
+    private roleService: RoleManagerService,
+    private message: NzMessageService
   ) {}
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -61,7 +63,10 @@ export class UserLoginComponent implements OnInit {
               localStorage.setItem('token', JSON.stringify(res?.token));
               localStorage.setItem('isLogined', JSON.stringify(true));
             }
+            this.message.success("Đăng nhập thành công!")
             this.router.navigate(['/home']);
+          }, (error)=>{
+            this.message.error("Đăng nhập thất bại!")
           });
       }
       if (!this.isLogin) {
@@ -70,8 +75,12 @@ export class UserLoginComponent implements OnInit {
           .subscribe((res: any) => {
             if (res) {
               console.log('register success');
+              this.message.success("Đăng ký tài khoản thành công!")
               this.changeStatus();
             }
+          },
+          (error)=>{
+            this.message.error("Đăng ký không thành công!")
           });
       }
     } else {
